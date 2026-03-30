@@ -79,3 +79,48 @@ h1, h3, h4, h5, h6{
 .nav a.active{
   text-decoration: underline;
 }
+
+/* Mobile layout: stack left / middle / right columns vertically. */
+@media (max-width: 700px){
+  .content-container{
+    grid-template-columns: 1fr;
+    grid-template-rows: 152px 1fr 152px;
+    height: 100vh;
+    min-height: 100vh;
+  }
+
+  /* Fixed-height top and bottom panels with their own scroll. */
+  .nav{
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .resources{
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  .nav section{
+    width: 100%;
+  }
+
+  .center{
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow-y: auto;
+    background-image: none;
+    background-color: #fff;
+    background-size: auto;
+  }
+
+  /* Let iframe fill the grid row. */
+  .main-frame, .side-frame{
+    height: 100%;
+  }
+}
