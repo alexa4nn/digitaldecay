@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 7: AI, Ghost Files + Speculative Non-Assets</title>
+  <link rel="stylesheet" href="../page.css" />
+</head>
+<body>
+  <section class="page">
+    <h1>Week 7: AI, Ghost Files + Speculative Non-Assets</h1>
+ 
+    <h3>Overview</h3>
+    <p>
+      This week shifts from preserving what exists to questioning what was never
+      collected, never labeled, or never seen. We examine how AI training datasets
+      function as a form of archive — one shaped by scraping, classification, and
+      bias — and ask what it means to build an archive of material that a machine
+      learning system could not, would not, or should not produce. Students will
+      train a small image classifier using their own scraped material, test its
+      limits, and begin building a speculative "ghost archive" of absence.
+    </p>
+ 
+    <h3>Themes</h3>
+    <ul>
+      <li>synthetic archives</li>
+      <li>generated images</li>
+      <li>ghost datasets</li>
+      <li>training data as cultural canon</li>
+      <li>classification as decision-making</li>
+    </ul>
+ 
+    <h3>Readings</h3>
+    <ul>
+      <li>Rothwell, Ian. <em>Postinternet Art and Its Afterlives</em> — Coda: "From Surfing to Scrolling" (excerpts on AI datasets)</li>
+      <li>Crawford, Kate and Paglen, Trevor. <em>Excavating AI: The Politics of Images in Machine Learning Training Sets</em> — <a href="https://excavating.ai" target="_blank" rel="noopener">excavating.ai</a></li>
+      <li>Crawford, Kate. <em>Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence</em> (optional)</li>
+    </ul>
+ 
+    <h3>In Class</h3>
+    <ul>
+      <li>lecture on AI image generation, training datasets, and bias</li>
+      <li>discussion: how do datasets encode cultural assumptions?</li>
+      <li>examples of artworks engaging with AI systems and their limits</li>
+      <li>hands-on exercise: train a classifier, surface the bias, embed it on your site</li>
+    </ul>
+ 
+    <h3>Key Questions</h3>
+    <ul>
+      <li>What would a dataset of things that don't exist look like?</li>
+      <li>What gets excluded when an AI model is trained — and where does that absence go?</li>
+      <li>Can we build archives of what was never collected, never labeled, never seen?</li>
+      <li>How do we document the gap between a prompt and its output?</li>
+      <li>What is the relationship between a ghost archive and the metadata schemas you built in Week 5?</li>
+    </ul>
+ 
+    <h3>Artworks + References Discussed</h3>
+    <ul>
+      <li>Jon Rafman, <em>(Cheval Crème)</em>, 2022 — AI-generated inkjet and acrylic on canvas</li>
+      <li>Jon Rafman, <em>(Club Angel II)</em>, 2022 — inkjet print and acrylic on canvas</li>
+      <li>Agnes Martin, <em>White Flower</em>, 1960 — referenced in Crawford and Paglen as an example of labeling instability</li>
+      <li>Refik Anadol, <em>Unsupervised</em>, 2022 — AI data sculpture, MoMA</li>
+      <li>Cory Arcangel and Hanne Mugaas, <em>Art Since 1960 (According to the Internet)</em></li>
+      <li>Andy Baio, Stable Diffusion training data browser, 2022</li>
+    </ul>
+ 
+    <h3>Exercise: Train a Classifier, Surface the Bias</h3>
+ 
+    <p><strong>Part 1: Train (30 minutes)</strong></p>
+    <p>
+      Go to <a href="https://teachablemachine.withgoogle.com" target="_blank" rel="noopener">teachablemachine.withgoogle.com</a>
+      and start an Image Project. Create 2–4 classes using images from the archive
+      or dataset you built in earlier weeks. You decide what the categories are —
+      this is the first decision that matters. You are building a taxonomy, just like
+      the ones Crawford and Paglen critique. Upload at least 10–15 images per class.
+      Train the model.
+    </p>
+    <p>As you build, keep notes on:</p>
+    <ul>
+      <li>What categories did you choose and why?</li>
+      <li>What didn't fit into any category?</li>
+      <li>What did you leave out?</li>
+    </ul>
+ 
+    <p><strong>Part 2: Break (20 minutes)</strong></p>
+    <p>
+      Test your trained model with images it has never seen. Try to confuse it. Feed
+      it things that are ambiguous, that sit between your categories, or that come
+      from outside your original dataset entirely. Document at least 5 moments where
+      the model fails, guesses wrong, or shows low confidence. Screenshot or write
+      down what happened.
+    </p>
+    <p>Ask yourself:</p>
+    <ul>
+      <li>When the model is uncertain, what does that uncertainty reveal about how you built the dataset?</li>
+      <li>What is the model confident about that it probably shouldn't be?</li>
+      <li>What would a person see that this model cannot?</li>
+    </ul>
+ 
+    <p><strong>Part 3: Embed (30 minutes)</strong></p>
+    <p>
+      Export your Teachable Machine model. Choose "Export Model" and select
+      TensorFlow.js. Either use the hosted URL Google provides or download the
+      model files to your project folder.
+    </p>
+    <p>
+      Open Claude (or another coding assistant) and prompt it to help you integrate
+      the model into your existing archive website. Here is a starting prompt you
+      can adapt:
+    </p>
+    <blockquote>
+      I built a Teachable Machine image classifier with [your number] categories:
+      [list your categories]. My model is hosted at [your URL or file path]. I have
+      an existing archive website built in HTML and CSS. Help me add a page where a
+      visitor can upload an image and the model classifies it. Show the prediction
+      and the confidence score. When confidence is below 60%, display a message that
+      says the model is uncertain. Style it to match this existing CSS: [paste your
+      stylesheet or describe your site's look].
+    </blockquote>
+    <p>Iterate from there. Ask Claude to help you add:</p>
+    <ul>
+      <li>a log of failed or uncertain classifications</li>
+      <li>a "what's missing" field next to every prediction</li>
+      <li>visual markers when the model doesn't know what it's looking at</li>
+    </ul>
+ 
+    <h3>Assignment: Ghost Archive</h3>
+ 
+    <p>
+      Create a "ghost archive" — a speculative or non-existent dataset that
+      documents something an AI system could not, would not, or should not produce.
+    </p>
+    <p>
+      Your ghost archive should be rooted in what you discovered during today's
+      exercise. Use the failures, refusals, uncertainties, and gaps from your
+      classifier as raw material. What did your model miss? What categories did you
+      not create? What images had no place in your taxonomy?
+    </p>
+ 
+    <p><strong>Your ghost archive should include:</strong></p>
+    <ul>
+      <li>a collection of 10–20 items: failed classification results, prompts that
+        produced nothing, speculative records, placeholder images, invented
+        metadata entries, or documentation of absent material</li>
+      <li>metadata for each item, using or adapting the schema you developed in
+        Week 5 — include fields for uncertainty, absence, failed interpretation,
+        or refusal</li>
+      <li>a short text (300–500 words) describing what is in the archive, what is
+        missing, and why</li>
+      <li>presentation as a webpage integrated into your existing archive site, or
+        as a standalone folder or visual grid</li>
+    </ul>
+ 
+    <p><strong>Use Claude or another coding tool</strong> to help you build the
+      webpage or interface. You can prompt it to generate HTML and CSS that presents
+      your speculative records, styles absent items differently from present ones,
+      or creates visual markers for uncertainty.</p>
+ 
+    <p><strong>Possible approaches:</strong></p>
+    <ul>
+      <li>an archive of everything your Teachable Machine model got wrong,
+        presented as a collection with full metadata</li>
+      <li>a dataset of images that should exist online but don't — cultural
+        material that was never digitized, photographed, or scraped</li>
+      <li>speculative catalog entries for files that were deleted, corrupted, or
+        never created</li>
+      <li>a reverse archive: items classified by what they are <em>not</em> rather
+        than what they are</li>
+      <li>metadata records with no corresponding objects — documentation of pure
+        absence</li>
+    </ul>
+ 
+    <h3>Tools</h3>
+    <ul>
+      <li><a href="https://teachablemachine.withgoogle.com" target="_blank" rel="noopener">Google Teachable Machine</a></li>
+      <li>Claude or another AI coding assistant for vibe coding the interface</li>
+      <li>VS Code or any text editor</li>
+      <li>browser for viewing and testing your webpage</li>
+    </ul>
+ 
+    <h3>Links</h3>
+    <ul>
+      <li><a href="#" target="_blank" rel="noopener">week 7 slides</a></li>
+      <li><a href="https://excavating.ai" target="_blank" rel="noopener">Excavating AI — Crawford and Paglen</a></li>
+      <li><a href="https://teachablemachine.withgoogle.com" target="_blank" rel="noopener">Google Teachable Machine</a></li>
+      <li><a href="#" target="_blank" rel="noopener">sample prompt template for Claude</a></li>
+    </ul>
+  </section>
+</body>
+</html>

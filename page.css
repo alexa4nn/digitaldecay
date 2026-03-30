@@ -1,0 +1,34 @@
+
+@font-face{
+  font-family: 'OceansideTypewriter';
+  src: url("fonts/Oceanside Typewriter.ttf") format('truetype');
+  font-display: swap;
+}
+
+body{
+  margin: 0;
+  font-size: 1.1rem;
+  font-family: serif;
+}
+
+.page{
+  /* Keep padding inside the declared width so narrow iframes don't clip content. */
+  box-sizing: border-box;
+  width: min(70ch, 100%);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+h1{
+  font-family: 'OceansideTypewriter', monospace;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+h2, h3, h4, h5, h6{
+  font-family: 'OceansideTypewriter', monospace;
+}
+
+a { color: black; }
+a:visited { color: black; }

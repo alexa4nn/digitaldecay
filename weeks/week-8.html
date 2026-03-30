@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 8: Exhibition as Research: Displaying the Incomplete</title>
+  <link rel="stylesheet" href="../page.css" />
+</head>
+<body>
+  <section class="page">
+    <h1>Week 8: Exhibition as Research — Displaying the Incomplete</h1>
+ 
+    <h3>Overview</h3>
+    <p>
+      This week shifts from building archives to exhibiting them. The central
+      question is: how do you display something that is incomplete, uncertain, or
+      partially absent? We look at how new media curators have approached this
+      problem, and then you will begin developing the interface, aesthetic, and
+      entry point for your own archive site. Each of you will 3D scan an object
+      that represents your archive and use it as the visual icon visitors click to
+      enter your collection. All sites will be linked together as a group
+      exhibition — a shared index of archives, each one a different approach to
+      collecting, classifying, and exhibiting digital material.
+    </p>
+ 
+    <h3>Themes</h3>
+    <ul>
+      <li>curating fragments</li>
+      <li>exhibiting absence</li>
+      <li>the archive as artwork</li>
+      <li>interface as curatorial statement</li>
+      <li>3D scanning as documentation</li>
+    </ul>
+ 
+    <h3>Readings</h3>
+    <ul>
+      <li>Paul, Christiane. <em>New Media in the White Cube and Beyond</em></li>
+    </ul>
+ 
+    <h3>In Class</h3>
+    <ul>
+      <li>lecture on exhibiting new media and incomplete works</li>
+      <li>discussion: how do you show what isn't there?</li>
+      <li>introduction to 3D photogrammetry with Luma AI</li>
+      <li>workshop: exhibition proposal sketching and site aesthetic development</li>
+    </ul>
+ 
+    <h3>Key Questions</h3>
+    <ul>
+      <li>How do you exhibit something that is incomplete, uncertain, or partially absent?</li>
+      <li>What single object represents your archive — and why?</li>
+      <li>What does your archive <em>feel</em> like as a designed experience?</li>
+      <li>How should absence appear in an interface?</li>
+      <li>What happens when every student's archive is displayed side by side?</li>
+    </ul>
+ 
+    <h3>Strategies for Exhibiting Absence</h3>
+    <ul>
+      <li><strong>The Placeholder</strong> — a visible marker where something should
+        be: an empty frame, a grayed-out thumbnail, a metadata record with no
+        corresponding file</li>
+      <li><strong>The Trace</strong> — evidence of something once present: a
+        screenshot of a dead link, a cached version, a dependency map of software
+        that no longer runs</li>
+      <li><strong>The Narration</strong> — text or annotation describing what is
+        missing, telling the visitor what they cannot see</li>
+      <li><strong>The Reconstruction</strong> — an approximation, emulation, or
+        speculative re-creation that stands in for the original while acknowledging
+        it is not the original</li>
+    </ul>
+ 
+    <h3>What You Are Building</h3>
+    <p>
+      Each of you will create an archive interface — a standalone website that
+      hosts your collected, scraped, classified, and speculative material from the
+      semester. Your site should have its own designed aesthetic: a visual identity
+      that reflects the nature of your collection.
+    </p>
+    <p>
+      Every site will feature a 3D scanned object as its entry point — a visual
+      icon that represents your archive, which visitors click to enter. All sites
+      will be linked together on a shared group index page, where each student's
+      3D icon leads to their individual archive. The group index becomes a
+      collective artwork: a gallery of ghost archives, incomplete collections, and
+      speculative datasets.
+    </p>
+ 
+    <h3>3D Scanning with Luma AI</h3>
+    <p>
+      Photogrammetry builds a 3D model from a series of overlapping photographs.
+      <a href="https://lumalabs.ai" target="_blank" rel="noopener">Luma AI</a>
+      uses neural radiance fields to reconstruct objects from phone video — no
+      special hardware needed.
+    </p>
+ 
+    <p><strong>Workflow:</strong></p>
+    <ul>
+      <li><strong>Choose your object</strong> — pick something that represents your
+        archive. It could be literal (a hard drive, a printed screenshot, a broken
+        device) or metaphorical (a found object, a personal artifact, a material
+        stand-in for something digital).</li>
+      <li><strong>Capture</strong> — walk slowly around the object with your phone
+        camera, recording a 30–60 second video from multiple angles. Keep the
+        object centered. Overlap your coverage.</li>
+      <li><strong>Upload to Luma AI</strong> — create a free account at
+        lumalabs.ai. Upload your video. The platform processes it into a 3D
+        model.</li>
+      <li><strong>Export</strong> — download the model as a .glb or .obj file for
+        embedding on the web.</li>
+    </ul>
+ 
+    <p>
+      The scan will have artifacts and imperfections — holes, warped surfaces,
+      floating geometry. This fits the themes of the course. Decay is built into
+      the medium.
+    </p>
+ 
+    <h3>Embedding 3D on the Web</h3>
+    <p>
+      Once you have your .glb file, you can display it on a webpage. The simplest
+      option is
+      <a href="https://modelviewer.dev" target="_blank" rel="noopener">model-viewer</a>,
+      a web component from Google that works with a single HTML tag:
+    </p>
+    <blockquote>
+      &lt;model-viewer src="your-model.glb" auto-rotate camera-controls&gt;&lt;/model-viewer&gt;
+    </blockquote>
+    <p>
+      Other options include Three.js for custom control, Sketchfab for an iframe
+      embed, or Luma AI's own embed code to keep the raw scan look.
+    </p>
+    <p>
+      Use Claude or another coding assistant to help integrate the model into your
+      site. A starting prompt:
+    </p>
+    <blockquote>
+      I have a .glb 3D model file. Help me create an HTML page that displays it
+      using model-viewer. When the visitor clicks the model, it should link to my
+      archive site. Style the background dark with minimal text underneath showing
+      the archive title.
+    </blockquote>
+ 
+    <h3>Developing Your Site Aesthetic</h3>
+    <p>
+      Your archive site needs a visual identity. Consider:
+    </p>
+    <ul>
+      <li>What does your archive <em>feel</em> like? Clinical and organized?
+        Fragmented and unstable? Speculative and dreamlike?</li>
+      <li>How should absence appear? Empty space? Redacted text? Grayed-out
+        elements? Dashed borders?</li>
+      <li>What typography fits? Monospaced suggests a database. Serif suggests a
+        catalog. Handwritten suggests something provisional.</li>
+      <li>What color palette? Warm or cold, bright or muted, high-contrast or
+        washed out?</li>
+    </ul>
+ 
+    <p><strong>Pages to design:</strong></p>
+    <ul>
+      <li><strong>Landing page</strong> — the 3D object as icon, archive title, a
+        one-sentence description</li>
+      <li><strong>Archive index</strong> — how items are listed, sorted, or
+        arranged (grid, list, timeline, scatter)</li>
+      <li><strong>Individual record view</strong> — how each item and its metadata
+        are displayed, including fields for absence and uncertainty</li>
+      <li><strong>Ghost entries</strong> — how speculative or missing items are
+        visually distinguished from present ones</li>
+    </ul>
+ 
+    <h3>Activity: Exhibition Proposal Workshop</h3>
+ 
+    <p><strong>Step 1: Choose your object (15 minutes)</strong></p>
+    <p>
+      Decide what you will 3D scan. Bring it to class next week or scan it today
+      if you have it. Write one sentence explaining why this object represents
+      your archive.
+    </p>
+ 
+    <p><strong>Step 2: Sketch your site (20 minutes)</strong></p>
+    <p>
+      On paper or in a simple wireframe tool, sketch three pages: the landing page
+      with your 3D object, the archive index page, and one individual record view.
+      Mark where absence, uncertainty, or ghost entries will appear.
+    </p>
+ 
+    <p><strong>Step 3: Define your aesthetic (15 minutes)</strong></p>
+    <p>
+      Write a short paragraph describing the visual identity of your site.
+      Include: color palette (2–3 colors), typography (1–2 fonts), how missing
+      items will look, and one word that describes the overall feeling.
+    </p>
+ 
+    <p><strong>Step 4: Pair and critique (15 minutes)</strong></p>
+    <p>
+      Share your sketch and aesthetic statement with a partner. Ask: does the
+      design reflect the nature of the collection? Where is absence visible?
+      What's missing from the plan?
+    </p>
+ 
+    <h3>Assignment: Exhibition Proposal</h3>
+    <p>
+      Write and design a proposal for your archive exhibition site.
+    </p>
+ 
+    <p><strong>Your proposal should include:</strong></p>
+    <ul>
+      <li><strong>Object statement</strong> (1–2 sentences) — what will you 3D
+        scan, and why does it represent your archive?</li>
+      <li><strong>Site wireframe</strong> (3 pages minimum) — sketched or digital
+        layouts for the landing page, archive index, and individual record view.
+        Annotate where ghost entries, absent items, or uncertainty markers will
+        appear.</li>
+      <li><strong>Aesthetic statement</strong> (200–300 words) — describe the
+        visual identity of your site. What does the archive feel like? What
+        colors, typography, and layout strategies will you use? How will absence
+        be made visible?</li>
+      <li><strong>Technical plan</strong> (short list) — what tools will you use
+        to build? (HTML/CSS, model-viewer or Three.js for 3D, Claude for vibe
+        coding, Luma AI for scanning, etc.)</li>
+      <li><strong>Content inventory</strong> — list the items currently in your
+        archive, including ghost entries from Week 7. Note which are present,
+        which are degraded, and which are speculative or absent.</li>
+    </ul>
+ 
+    <h3>What's Ahead</h3>
+    <ul>
+      <li><strong>Week 9:</strong> Prototype development — studio time to build
+        your site, integrate your 3D scan, and code your archive interface. Bring
+        your scanned object and all archive materials.</li>
+      <li><strong>Week 10:</strong> Final presentations — present your archive
+        site to the class. Group critique. The shared index page goes live.</li>
+    </ul>
+    <p>
+      Your 3D scan must be completed before Week 9. Capture and upload to Luma AI
+      this week.
+    </p>
+ 
+    <h3>Tools</h3>
+    <ul>
+      <li><a href="https://lumalabs.ai" target="_blank" rel="noopener">Luma AI</a> — 3D photogrammetry from phone video</li>
+      <li><a href="https://modelviewer.dev" target="_blank" rel="noopener">model-viewer</a> — embed .glb models in HTML</li>
+      <li>Claude or another AI coding assistant for vibe coding</li>
+      <li>VS Code or any text editor</li>
+      <li>browser for viewing and testing your site</li>
+    </ul>
+ 
+    <h3>Links</h3>
+    <ul>
+      <li><a href="#" target="_blank" rel="noopener">week 8 slides</a></li>
+      <li><a href="https://lumalabs.ai" target="_blank" rel="noopener">Luma AI</a></li>
+      <li><a href="https://modelviewer.dev" target="_blank" rel="noopener">model-viewer documentation</a></li>
+      <li><a href="#" target="_blank" rel="noopener">exhibition proposal template</a></li>
+    </ul>
+  </section>
+</body>
+</html>
