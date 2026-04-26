@@ -10,120 +10,130 @@
 
 <body>
   <section class="page">
-    <section class="page">
-      <h1>Week 5: Metadata for Loss, Failure + Uncertainty</h1>
+    <h1>Week 5: Metadata for Loss, Failure + Uncertainty</h1>
 
-      <h3>Overview</h3>
-      <p>
-        This week connects research, archives, and interface. We begin by following a
-        rabbit hole—moving through links, images, and references—to gather material.
-        This process produces an archive shaped by curiosity, selection, and omission.
-        We then shift to metadata, asking how to describe what is missing, unclear, or
-        unresolved. Finally, we introduce HTML and CSS as tools for structuring and
-        displaying that archive as a webpage.
-      </p>
+    <h3>Overview</h3>
+    <p>
+      This week connects research, archives, and interface. We begin by following a
+      rabbit hole, moving through links, images, and references to gather material.
+      This process produces an archive shaped by curiosity, selection, and omission.
+      We then shift to metadata, asking how to describe what is missing, unclear, or
+      unresolved. Finally, we introduce CSS and the Are.na API as tools for structuring
+      and displaying that archive as a webpage.
+    </p>
 
-      <h3>Themes</h3>
-      <ul>
-        <li>metadata as knowledge structure</li>
-        <li>archives as partial and constructed</li>
-        <li>absence, failure, and uncertainty</li>
-        <li>rabbit holes as research method</li>
-        <li>interface as interpretation</li>
-      </ul>
+    <h3>Themes</h3>
+    <ul>
+      <li>metadata as knowledge structure</li>
+      <li>archives as partial and constructed</li>
+      <li>absence, failure, and uncertainty</li>
+      <li>rabbit holes as research method</li>
+      <li>interface as interpretation</li>
+    </ul>
 
-      <h3>Readings</h3>
-      <ul>
-        <li>Gilliland, Anne J. “Setting the Stage.” <em>Introduction to Metadata</em></li>
-        <li>Edwards, Elizabeth. <em>Raw Histories: Photographs, Anthropology and Museums</em> (excerpts)</li>
-        <li>Alden Burke, <em>How to Fall Down a Rabbit Hole</em></li>
-        <li>Spencer Chang + Marie Tjalve, <em>Syllabus for Taking an Internet Walk</em></li>
-      </ul>
+    <h3>Readings</h3>
+    <ul>
+      <li>Gilliland, Anne J. "Setting the Stage." <em>Introduction to Metadata</em></li>
+      <li>Edwards, Elizabeth. <em>Raw Histories: Photographs, Anthropology and Museums</em> (excerpts)</li>
+      <li>Alden Burke, <em>How to Fall Down a Rabbit Hole</em></li>
+      <li>Spencer Chang + Marie Tjalve, <em>Syllabus for Taking an Internet Walk</em></li>
+    </ul>
 
-      <h3>In Class</h3>
-      <ul>
-        <li>lecture on metadata, archives, and absence</li>
-        <li>discussion of rabbit holes and internet walking as research methods</li>
-        <li>examples of artworks and fragmentary archives</li>
-        <li>introduction CSS</li>
-        <li>workshop: using the Are.na API</li>
-      </ul>
+    <h3>In Class</h3>
+    <ul>
+      <li>lecture on metadata, archives, and absence</li>
+      <li>discussion of rabbit holes and internet walking as research methods</li>
+      <li>examples of artworks and fragmentary archives</li>
+      <li>introduction to CSS</li>
+      <li>workshop: using the Are.na API to display your collection as a webpage</li>
+    </ul>
 
-      <h3>Key Questions</h3>
-      <ul>
-        <li>How do we document what is missing?</li>
-        <li>What does a rabbit hole produce?</li>
-        <li>What cannot be known from an archive?</li>
-        <li>How does interface shape interpretation?</li>
-      </ul>
+    <h3>Key Questions</h3>
+    <ul>
+      <li>How do we document what is missing?</li>
+      <li>What does a rabbit hole produce?</li>
+      <li>What cannot be known from an archive?</li>
+      <li>How does interface shape interpretation?</li>
+    </ul>
 
-      <h3>Activity</h3>
-      <p><strong>Rabbit Hole Archive + Metadata of Absence</strong></p>
-      <p>
-        Begin with a single entry point—a keyword, image, link, or reference—and follow
-        connections as they emerge. Collect 20–50 items as you move: links, images,
-        screenshots, text fragments, or notes. Organize what you gather into a simple
-        archive using Are.na Then write metadata that
-        describes not only what is present, but what is missing, unclear, or unresolved in the descriptions. Use Are.na API to display your archive as a webpage, making the metadata visible alongside the items.
-      </p>
+    <h3>Activity</h3>
+    <p><strong>Rabbit Hole Archive + Metadata of Absence</strong></p>
+    <p>
+      Begin with a single entry point, a keyword, image, link, or reference, and follow
+      connections as they emerge. Collect 20-50 items as you move: links, images,
+      screenshots, text fragments, or notes. Organize what you gather into a simple
+      archive using Are.na. Then write metadata that describes not only what is present,
+      but what is missing, unclear, or unresolved in the descriptions. Use the Are.na API
+      to display your archive as a webpage, making the metadata visible alongside the items.
+    </p>
 
-      <h3>CSS Workshop</h3>
-      <p>
-        We will introduce CSS as a way of
-        shaping a wensite's appearance. Edit your archive webpages with CSS.
-        The goal is not technical complexity, but clarity—how to make your archive
-        visible, and how to represent absence within it.
-      </p>
+    <h3>Are.na API Workshop</h3>
+    <p><strong>Displaying your blocks as a webpage</strong></p>
+    <p>
+      The Are.na API lets you pull your channel's blocks (images, links, text) into
+      a custom HTML page. Public channels require no authentication. The basic workflow:
+    </p>
+    <ol>
+      <li>Find your channel slug (the last part of your Are.na channel URL)</li>
+      <li>Fetch your blocks from <code>https://api.are.na/v2/channels/YOUR-SLUG</code></li>
+      <li>Loop through the blocks and generate HTML for each one</li>
+      <li>Style the page with CSS to match your archive site</li>
+    </ol>
+    <p>
+      We will use a Google Colab notebook to walk through each step. The notebook
+      fetches your channel data, lets you inspect the block structure, generates
+      a complete HTML page, and downloads it for you to add to your site.
+    </p>
+    <p>
+      Example: <a href="arena-example.html" target="_blank" rel="noopener">relics</a>,
+      built from
+      <a href="https://www.are.na/alexa-ann-bonomo/relics-uikeqpbrexa" target="_blank" rel="noopener">this
+        Are.na channel</a>.
+    </p>
 
-      <h3>Assignment: Archive of Digital Loss</h3>
+    <h3>CSS Workshop</h3>
+    <p>
+      We will introduce CSS as a way of shaping a website's appearance. Edit your
+      archive webpages with CSS. The goal is not technical complexity, but clarity:
+      how to make your archive visible, and how to represent absence within it.
+    </p>
 
-      <p>
-        Organize your collected materials into your current archive site and add some styling. 
-      </p>
+    <h3>Assignment: Archive of Digital Loss</h3>
+    <p><strong>The Walk</strong></p>
+    <p>
+      Conduct an internet walk (minimum 1 hour) following a question-path about
+      digital loss. As you move, collect what you find on an Are.na channel: links,
+      images, screenshots, text fragments, dead URLs, error pages, partial records.
+      Aim for 20-50 items. Save everything, including things that are broken, missing,
+      or only partially accessible.
+    </p>
+    <p><strong>The Metadata</strong></p>
+    <p>
+      Go back through your Are.na blocks and write descriptions that function as
+      metadata. For each item, describe not only what it is but what is missing,
+      unclear, or unresolved. Note the source, the date you found it, and what
+      you cannot verify. Use the description field to document absence honestly.
+    </p>
+    <p><strong>The Webpage</strong></p>
+    <p>
+      Use the Colab notebook to pull your Are.na channel into a webpage. Style it
+      with CSS to match your archive site. Add the page to your site repository.
+      The metadata you wrote on Are.na should be visible on the page alongside
+      the items.
+    </p>
 
-      <h3>The Walk + Carrier Bag</h3>
-      <p>
-        Conduct an internet walk (minimum 1 hour) following a question-path about
-        digital loss. Submit a path map, a log of sites visited, and a collected
-        folder of materials including accessible, degraded, and absent objects.
-      </p>
-
-      <h3>The Schema</h3>
-      <p>
-        Design a metadata schema for the full range of your carrier bag. Include
-        Dublin Core fields plus at least 5 custom fields for loss, uncertainty,
-        and failed access. For each custom field, include: name, definition,
-        value type, and one example from your walk.
-      </p>
-
-      <h3>Three Records</h3>
-      <p>
-        Apply your schema to three items: one accessible object, one degraded
-        object, and one object known only from a trace. Complete every field
-        honestly. Flag speculation and admit unknowns.
-      </p>
-
-      <h3>Reflection</h3>
-      <p>
-        Write a 400-word reflection drawing on Burke, Chang + Tjalve, Gilliland,
-        and Edwards. Consider: what did the walk produce that a search would not?
-        How does the path become part of the archive? What does it mean to write
-        a record for an absence?
-      </p>
     <h3>Tools</h3>
     <ul>
-      <li>Google Colab notebook (HTML + CSS intro)</li>
+      <li>Google Colab notebook (Are.na API + HTML generation)</li>
       <li>VS Code or any text editor</li>
       <li>browser for viewing your webpage</li>
     </ul>
 
     <h3>Links</h3>
     <ul>
-      <li><a href="#" target="_blank" rel="noopener">week 5 slides</a></li>
-      <li><a href="#" target="_blank" rel="noopener">html + css notebook</a></li>
-      <li><a href="#" target="_blank" rel="noopener">assignment template</a></li>
+      <li><a href="https://colab.research.google.com/drive/1cHPPV9gJS3R-OnVgr6dHcrdTQ5MymKFr?usp=drive_link" target="_blank" rel="noopener">Are.na API notebook (Google Colab)</a></li>
+      <li><a href="../resources/arena-example.html" target="_blank" rel="noopener">example: relics</a></li>
     </ul>
-  </section>
   </section>
 </body>
 

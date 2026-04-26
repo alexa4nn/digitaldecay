@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>relics</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background: white;
+      color: black;
+    }
+
+    a { color: blue; }
+    a:visited { color: purple; }
+
+    header {
+      padding: 40px 20px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    header .meta {
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+
+    #loading {
+      padding: 60px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    #error {
+      padding: 60px 20px;
+      text-align: center;
+      color: red;
+    }
+
+    .grid {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .block {
+      border: 1px solid black;
+    }
+
+    .block-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .block-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .block-text-content {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      padding: 12px;
+      background: black;
+      color: white;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      overflow: hidden;
+    }
+
+    .block-info { padding: 10px 12px 14px; }
+
+    .block-title {
+      font-size: 0.85rem;
+      font-weight: bold;
+      line-height: 1.3;
+    }
+
+    .block-source {
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: #666;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .block-description {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      color: #444;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 24px 16px 16px; }
+      .grid {
+        padding: 8px 16px 60px;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>relics</h1>
+    <div class="meta">
+      from <a href="https://www.are.na/alexa-ann-bonomo/relics-uikeqpbrexa" target="_blank">are.na</a>
+    </div>
+  </header>
+
+  <div id="loading">loading...</div>
+  <div id="error" style="display:none;"></div>
+  <div class="grid" id="grid" style="display:none;"></div>
+
+  <script>
+    const CHANNEL_SLUG = 'relics-uikeqpbrexa';
+    const PER_PAGE = 100;
+
+    async function fetchChannel() {
+      const url = `https://api.are.na/v2/channels/${CHANNEL_SLUG}?per=${PER_PAGE}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`API returned ${response.status}`);
+      return response.json();
+    }
+
+    function renderBlock(block) {
+      const el = document.createElement('div');
+      el.className = 'block';
+
+      let visual = '';
+      if (block.image && block.image.display && block.image.display.url) {
+        visual = `<img class="block-image"
+                       src="${block.image.display.url}"
+                       alt="${block.title || ''}"
+                       loading="lazy" />`;
+      } else if (block.class === 'Text' && block.content) {
+        const truncated = block.content.length > 280
+          ? block.content.slice(0, 280) + '...'
+          : block.content;
+        visual = `<div class="block-text-content">${truncated}</div>`;
+      } else {
+        visual = `<div class="block-placeholder">${block.class || 'block'}</div>`;
+      }
+
+      const title = block.title || block.generated_title || '';
+      const sourceUrl = block.source && block.source.url ? block.source.url : null;
+      const description = block.description || '';
+
+      let titleHtml = '';
+      if (title) {
+        if (sourceUrl) {
+          titleHtml = `<a href="${sourceUrl}" target="_blank">${title}</a>`;
+        } else {
+          titleHtml = title;
+        }
+      }
+
+      let sourceHtml = '';
+      if (sourceUrl) {
+        const domain = new URL(sourceUrl).hostname.replace('www.', '');
+        sourceHtml = `<div class="block-source"><a href="${sourceUrl}" target="_blank">${domain}</a></div>`;
+      }
+
+      let descHtml = '';
+      if (description) {
+        const short = description.length > 140
+          ? description.slice(0, 140) + '...'
+          : description;
+        descHtml = `<div class="block-description">${short}</div>`;
+      }
+
+      el.innerHTML = `
+        ${visual}
+        <div class="block-info">
+          ${titleHtml ? `<div class="block-title">${titleHtml}</div>` : ''}
+          ${sourceHtml}
+          ${descHtml}
+        </div>
+      `;
+
+      return el;
+    }
+
+    async function init() {
+      const loadingEl = document.getElementById('loading');
+      const errorEl = document.getElementById('error');
+      const gridEl = document.getElementById('grid');
+
+      try {
+        const data = await fetchChannel();
+        const blocks = (data.contents || []).filter(b => b.class !== 'Channel');
+
+        if (blocks.length === 0) {
+          errorEl.textContent = 'this channel is empty or private.';
+          errorEl.style.display = 'block';
+          loadingEl.style.display = 'none';
+          return;
+        }
+
+        blocks.forEach(block => {
+          gridEl.appendChild(renderBlock(block));
+        });
+
+        loadingEl.style.display = 'none';
+        gridEl.style.display = 'grid';
+
+      } catch (err) {
+        console.error(err);
+        errorEl.textContent = `could not load channel: ${err.message}`;
+        errorEl.style.display = 'block';
+        loadingEl.style.display = 'none';
+      }
+    }
+
+    init();
+  </script>
+
+</body>
+</html>
