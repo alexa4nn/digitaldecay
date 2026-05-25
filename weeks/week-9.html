@@ -3,13 +3,240 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Week 9: Prototype Development</title>
+  <title>Week 9: Prototype Development — Publishing the Archive</title>
   <link rel="stylesheet" href="../page.css" />
 </head>
 <body>
   <section class="page">
-    <h1>Week 9: Prototype Development</h1>
-    <p>Content for Week 9: Prototype Development goes here.</p>
+    <h1>Week 9: Prototype Development — Publishing the Archive</h1>
+
+    <h3>Overview</h3>
+    <p>
+      Today we will spend more time building rather than theorizing, but before you can build, you need somewhere for
+      your work to live publicly. We start with a hands-on demo of how to push a
+      site to the web using GitHub Pages, both from the terminal and from VS
+      Code, and look at an alternative host (statichost.eu) for anyone who wants
+      something outside the Microsoft/GitHub ecosystem. Then we'll get your 3D
+      scans (now exported as proper .glb files) into the shared class drive so
+      they can be integrated into the group index. The rest of the time spent in class is for
+      building, with a mid-session group critique to test how your archive is
+      reading.
+    </p>
+
+    <h3>In Class</h3>
+    <ul>
+      <li>demo: deploying a site to GitHub Pages from the terminal</li>
+      <li>demo: deploying the same site to GitHub Pages from VS Code</li>
+      <li>alternative: statichost.eu for European/privacy-focused hosting</li>
+      <li>exercise: upload your final .glb file to the shared class drive</li>
+      <li>studio time (work block 1)</li>
+      <li>group critique in pairs or small groups</li>
+      <li>studio time (work block 2)</li>
+      <li>questions and troubleshooting</li>
+    </ul>
+
+
+    <h3>Demo: Deploying to GitHub Pages from the Terminal</h3>
+    <p>
+      The terminal route is bare bones, but
+      is the more durable skill. Once you understand it, every other deployment
+      tool makes sense. We will walk through this together.
+    </p>
+
+    <p>First, you will want to create a github account if you haven't already. then you will want to create a new repository. You can select MIT License if you would like to add a copyright. But it is not required.
+    </p>
+
+<p>The basic flow:</p>
+    <code
+      cd path/to/your-archive-site<br />
+      git init<br />
+      git add .<br />
+      git commit -m "first commit"<br />
+      git branch -M main<br />
+      git remote add origin https://github.com/your-username/your-archive.git<br />
+      git push -u origin main
+    </code>
+    <p>
+      Then go to your repo on github.com, click <strong>Settings → Pages</strong>,
+      and set the source to <code>main</code> branch, root folder. Your site
+      will be live at
+      <code>https://your-username.github.io/your-archive/</code> within a minute
+      or two.
+    </p>
+    <p>A few things to watch for:</p>
+    <ul>
+      <li>file paths must be relative (<code>images/scan.glb</code>, not <code>/Users/you/Desktop/...</code>)</li>
+      <li>file names are case-sensitive on GitHub Pages but not on your Mac. This is the #1 reason a site works locally and breaks online</li>
+      <li>the main entry file must be named <code>index.html</code></li>
+    </ul>
+ 
+    <h3>Demo: Deploying to GitHub Pages from VS Code</h3>
+    <p>
+      If the terminal feels like too much right now, VS Code can do almost the
+      same thing through its built-in Source Control panel and the GitHub
+      extension. We will walk through:
+    </p>
+    <ul>
+      <li>signing into GitHub from inside VS Code</li>
+      <li>using "Publish to GitHub" to create the repo in one click</li>
+      <li>committing and pushing changes through the Source Control sidebar</li>
+      <li>enabling Pages in the browser the same way as above</li>
+    </ul>
+    <p>
+      Both routes end in the same place. Pick the one that you'll actually keep
+      using.
+    </p>
+ 
+    <h3>Alternative: statichost.eu (zip upload, no git)</h3>
+    <p>
+      For students who don't want to deal with GitHub auth today, or who want a
+      non-American, GDPR-compliant host on principle,
+      <a href="https://www.statichost.eu" target="_blank" rel="noopener">statichost.eu</a>
+      is a Sweden-based static host. The free tier gives you 10 GB of traffic
+      and 100 build minutes per month, which is more than enough for an archive
+      site.
+    </p>
+    <p>
+      Statichost can pull from a git repo like GitHub Pages does, but it also
+      has a direct zip upload option that skips git entirely. This is the path
+      to take if you're stuck on 2FA or PAT setup and just need a URL.
+    </p>
+    <p><strong>Zip upload workflow:</strong></p>
+    <ul>
+      <li>Make an account at statichost.eu</li>
+      <li>Click <strong>Add site → upload zip file</strong></li>
+      <li>Zip the <em>contents</em> of your site folder (not the folder itself, or all your files will end up under <code>/public/</code>)</li>
+      <li>Upload. You get a URL at <code>your-site.statichost.eu</code></li>
+      <li>To update the site later, zip the new version and re-upload from the dashboard</li>
+    </ul>
+    <p>
+      The tradeoff: no version history, no record of changes, and you have to
+      re-zip and re-upload every time you edit. For a one-week sprint to get a
+      site live, that's fine. For ongoing iteration, git is better.
+    </p>
+    <p>Why you might stick with GitHub Pages:</p>
+    <ul>
+      <li>everyone in the class will be using it, so troubleshooting is easier</li>
+      <li>you get version history, which is itself a kind of archive</li>
+      <li>updates are one command instead of a re-zip and re-upload</li>
+    </ul>
+    <p>Why you might choose statichost (beyond just dodging GitHub auth):</p>
+    <ul>
+      <li>the servers are in Europe, the company is European, and no personal data is logged</li>
+      <li>it fits the themes of the course. Different infrastructures preserve, surveil, and remember differently</li>
+      <li>it is a small platform and small platforms disappear. Using one is itself an archival gesture</li>
+    </ul>
+ 
+    <h3>Exercise: Upload Your .glb to the Class Drive</h3>
+    <p>
+      By now you should have your 3D scan back from your scanning app. Today we
+      make sure everyone has a properly-exported <strong>.glb</strong> file (not
+      .obj, not .ply, not a link to a Luma viewer page) sitting in the shared
+      class drive folder, named <code>lastname-firstname.glb</code>.
+    </p>
+    <p>
+      A quick note on the scanning app: if Luma AI worked for you, great. Keep
+      using it. If you ran into export issues or you're on Android,
+      <a href="https://www.kiriengine.app" target="_blank" rel="noopener">KIRI Engine</a>
+      is the alternative we'll demo. It is free, cross-platform (iOS and
+      Android), and exports cleanly to GLTF/GLB on the free tier (3 free exports
+      per week, which is plenty). The capture process is nearly identical: walk
+      around the object, upload, wait, download. The difference is where the
+      file lands afterwards.
+    </p>
+    <p><strong>Steps:</strong></p>
+    <ul>
+      <li>Open your scan in Luma AI or KIRI Engine.</li>
+      <li>Export as <strong>.glb</strong> (not .obj, not .usdz). If your app gives you a poly-count choice, go low or medium. These files need to load in a browser.</li>
+      <li>Rename the file <code>lastname-firstname.glb</code>.</li>
+      <li>Drop it in the shared class drive folder (link in the class slack).</li>
+      <li>Drop the same file into your own site's <code>models/</code> or <code>assets/</code> folder and link to it from your landing page with <code>&lt;model-viewer&gt;</code>.</li>
+    </ul>
+    <p>
+      If your scan has holes, warped surfaces, or floating geometry, keep it.
+      Don't try to fix it. That's the point.
+    </p>
+ 
+    <h3>Work Block 1 (45 minutes)</h3>
+    <p>
+      Studio time. Get your site live somewhere, even if it's just a landing
+      page with your 3D object on it. The goal for this block is
+      <strong>a working URL you can share with another student</strong>, not a
+      finished site. Push early, push broken, push often.
+    </p>
+ 
+    <h3>Group Critique (30 minutes)</h3>
+    <p>
+      Break into groups of three. Each person gets ~10 minutes. Open your live
+      site in the browser and walk the others through:
+    </p>
+    <ul>
+      <li>what your archive is about</li>
+      <li>where absence shows up in the interface so far</li>
+      <li>one thing you are stuck on</li>
+    </ul>
+    <p>
+      The other two should ask: does the design carry the concept? Where do you
+      want to look that the site is not letting you look? What is the site doing
+      that surprises you, for better or worse?
+    </p>
+ 
+    <h3>Work Block 2 (45 minutes)</h3>
+    <p>
+      Back to building. Use what came up in critique. By the end of class today
+      you should have:
+    </p>
+    <ul>
+      <li>a published URL</li>
+      <li>your 3D scan visible on the landing page</li>
+      <li>at least one archive item rendered with its metadata (including any uncertainty/ghost fields)</li>
+    </ul>
+ 
+    <h3>Questions + Troubleshooting (last 15 minutes)</h3>
+    <p>
+      Open floor. Bring problems you hit during work blocks: git errors,
+      model-viewer not rendering, CORS issues with the .glb, layout breaking on
+      mobile, anything.
+    </p>
+ 
+    <h3>Assignment</h3>
+    <p>
+      Keep building. Next week is final presentations. By Week 10 your site
+      needs:
+    </p>
+    <ul>
+      <li>a working published URL</li>
+      <li>the 3D object on the landing page as the entry point</li>
+      <li>the archive index with all items, including ghost entries</li>
+      <li>at least one individual record view</li>
+      <li>a clear visual identity</li>
+    </ul>
+    <p>
+      Submit your URL to the shared drive by the night before Week 10 so the
+      group index page can be assembled.
+    </p>
+ 
+    <h3>What's Ahead</h3>
+    <ul>
+      <li><strong>Week 10:</strong> Final presentations. Present your archive site to the class. Group critique. The shared index page goes live.</li>
+    </ul>
+ 
+    <h3>Tools</h3>
+    <ul>
+      <li><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> — free static hosting from a git repo</li>
+      <li><a href="https://www.statichost.eu" target="_blank" rel="noopener">statichost.eu</a> — European alternative</li>
+      <li><a href="https://code.visualstudio.com" target="_blank" rel="noopener">VS Code</a> with the GitHub extension</li>
+      <li><a href="https://www.kiriengine.app" target="_blank" rel="noopener">KIRI Engine</a> — cross-platform scanning alternative to Luma AI</li>
+      <li><a href="https://modelviewer.dev" target="_blank" rel="noopener">model-viewer</a> — embeds your .glb on the page</li>
+    </ul>
+ 
+    <h3>Links</h3>
+    <ul>
+      <li><a href="https://docs.github.com/en/pages" target="_blank" rel="noopener">GitHub Pages documentation</a></li>
+      <li><a href="https://www.statichost.eu/docs/" target="_blank" rel="noopener">statichost.eu docs</a></li>
+      <li><a href="https://www.statichost.eu/docs/direct-upload/" target="_blank" rel="noopener">statichost.eu direct zip upload guide</a></li>
+      <li><a href="https://www.kiriengine.app" target="_blank" rel="noopener">KIRI Engine</a></li>
+    </ul>
   </section>
 </body>
 </html>
