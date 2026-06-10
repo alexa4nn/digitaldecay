@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive of Archives</title>
+<style>
+  @font-face {
+    font-family: 'Oceanside';
+    src: url('Oceanside_Typewriter.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    overflow: hidden;
+    background: #0a0a0a;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: grab;
+  }
+  body.dragging { cursor: grabbing; }
+  canvas { display: block; }
+
+  .vignette {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 5;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.5) 100%);
+  }
+
+  #header {
+    position: fixed;
+    top: 50px;
+    left: 60px;
+    z-index: 20;
+    pointer-events: none;
+    max-width: 620px;
+  }
+  #header h1 {
+    font-family: 'Oceanside', cursive;
+    font-size: 52px;
+    font-weight: 400;
+    font-style: italic;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 30px;
+  }
+  #header p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    color: #ccc;
+    line-height: 1.7;
+  }
+
+  #hint {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    pointer-events: none;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #444;
+    transition: opacity 0.8s;
+  }
+
+  #loading {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: opacity 0.8s;
+    gap: 20px;
+  }
+  #loading.hidden { opacity: 0; pointer-events: none; }
+  #loading .spinner {
+    width: 40px; height: 40px;
+    border: 2px solid #222;
+    border-top-color: #888;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #load-status {
+    font-size: 13px;
+    color: #555;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  #load-bar-outer {
+    width: 200px; height: 2px;
+    background: #222; border-radius: 1px; overflow: hidden;
+  }
+  #load-bar-inner {
+    height: 100%; width: 0%;
+    background: #888; transition: width 0.3s;
+  }
+
+  #name-label {
+    position: fixed;
+    bottom: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    pointer-events: none;
+    font-family: 'Oceanside', cursive;
+    font-size: 18px;
+    font-style: italic;
+    color: #ccc;
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+  }
+
+  /* ── Card Modal ── */
+  #card-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
+  }
+  #card-overlay.visible { display: flex; }
+
+  #card {
+    background: #111;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 44px 48px;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    animation: cardIn 0.3s ease-out;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  #card-name {
+    font-family: 'Oceanside', cursive;
+    font-size: 36px;
+    font-style: italic;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  #card-description {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    color: #999;
+    line-height: 1.7;
+    margin-bottom: 32px;
+    min-height: 20px;
+  }
+  #card-link {
+    display: inline-block;
+    font-family: 'Oceanside', cursive;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+    padding: 12px 28px;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  #card-link:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.5);
+  }
+  #card-link.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  #card-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none; border: none;
+    color: #666; font-size: 22px;
+    cursor: pointer; line-height: 1; padding: 4px;
+    transition: color 0.2s;
+  }
+  #card-close:hover { color: #fff; }
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div id="load-status">Loading models...</div>
+  <div id="load-bar-outer"><div id="load-bar-inner"></div></div>
+</div>
+<div class="vignette"></div>
+
+<div id="header">
+  <h1>archive of archives</h1>
+  <p>Digital Decay and Afterlives took place during the months of April and May in 2026. This archive of archives is composed of <span id="artist-count"></span> computational artists' 3D scanned lyrical artifacts that represent a piece of their own archival findings.</p>
+</div>
+
+<div id="hint">click an object to explore</div>
+<div id="name-label"></div>
+
+<div id="card-overlay">
+  <div id="card">
+    <button id="card-close">&times;</button>
+    <div id="card-name"></div>
+    <div id="card-description"></div>
+    <a id="card-link" href="#" target="_blank">go to archive</a>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/",
+    "cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as CANNON from 'cannon-es';
+
+// ══════════════════════════════════════════════════════════
+//  MODEL REGISTRY — from the class spreadsheet
+//  Edit descriptions here once students submit them
+// ══════════════════════════════════════════════════════════
+const MODEL_DIR = '3D Scans/';
+const MODELS = [
+  { file: 'kiki_s-book.glb',      label: 'Kiki',               description: '', link: 'https://kiki.directory/archive/lgn' },
+  { file: 'emily-VHS.glb',        label: 'Emily Leach',        description: 'Branching pathways to interact with a locked archive of guerilla archivist Marion Stoke\u2019s personal writing hosted on the Internet Archive.\n\nSo grateful & excited to keep thinking about the fragility/preservation/perservation of digital information \u2764', link: 'https://e-dot-leach.github.io/remanence/' },
+  { file: 'mishka_meditaciones.glb',            label: 'Mishka',             description: '', link: 'https://mishkanemes.neocities.org/meditaciones' },
+  { file: 'lipten-sabine.glb',    label: 'Sabine',             description: '', link: 'https://palmsized.statichost.page/' },
+  { file: 'km_radio.glb',         label: 'Kaitlyn',            description: '', link: 'https://tumshurt.github.io/banh-xeo/' },
+  { file: 'Addis_S.glb',          label: 'Addis Smith',        description: '', link: 'https://imaddis.github.io/Away-in-Berlin-Archive/index.html' },
+  { file: 'harvey.glb',           label: 'Harvey Hayes',       description: '', link: 'https://harvhaze.github.io/consumer-portrait/ ' },
+  { file: 'kasiapluto.glb',       label: 'Kasia Pluto',        description: 'Archive of Speculative memories, Missing data, & recovered images from a Tumblr blog that was active for nearly 10 years. I had SO much fun in the class, I learned SO much\u2014 I\u2019m still processing it all & taking all the new info in, reviewing our notes, reading the readings, reviewing our work. It was such a jam packed 10 weeks!! It was so inspiring to see and work together on our projects. I\u2019m so honored to have been a part of the class with you all!! (and I got to learn how to code)', link: 'https://kasiapluto.github.io/my-archive/' },
+  { file: 'Guy_mesh_glb.glb',     label: 'Talia Hamburg',      description: 'A living archive and open-data visualization mapping 684,000+ New York City trees and tracking the urban phenomenon of trash on trees in the wintertime (mainly). Built with NYC Open Data and community-contributed video documentation, welcoming every pedestrian, citizen, or just a random person to capture this visual sight and contribute to the archive.', link: 'https://taliahamburg.github.io/bags-on-trees/' },
+  { file: 'kendall.glb',          label: 'Kenny Weiss-Close',  description: 'An archive of post 9/11 flash games, meant to archive a specific era of hyperviolence and anti-SWANA bigotry.', link: 'https://sheherzog.github.io/binladenspritelibrary/index.html' },
+  { file: 'hello_kitty_plush.glb',label: 'Carolina',           description: 'How to Save a Life: An exploration and rediscovery of my childhood sense of self through creative expression, seeking to save and commemorate the stage of my life that I do not quite remember.\n\nDigital Decay and Afterlives: Digital archives and physical archives are sisters and computers are inherently human and so are archives and I love to learn. Digital Decay and Afterlives Spring \u201926 forever \u2764', link: 'https://how-to-save-a-life.starstar.website/' },
+  { file: 'BMO_v7.glb',           label: 'Paul',               description: 'A collection of found objects and associated Superzooms (a now-defunct video filter on Instagram) that I took from Jan 2020 \u2013 Apr 2021!\n\nScrolling \u2192 ambience? Ambience, vibes, attention (to digital decay, but also physical decay?). Is this an archive of my attention? Artifacts of my mediated performance of daily life on social media, then making it static/ambient. To archive and to be archived is to be seen, but also to be given agency?', link: 'https://paulyshwang.github.io/superzoom-archive/' },
+  { file: 'sofya.glb',            label: 'Sofya',              description: '', link: 'https://notsonya.github.io/digi_loss/' },
+  { file: 'yan.glb',              label: 'Yan',                description: '', link: 'https://yl8110.github.io/archive-of-flash-games/' },
+  { file: 'anastasia.glb',        label: 'Anastasia',          description: '', link: '' },
+  { file: 'myer_teeth.glb',      label: 'Myer',               description: '404 ARCHIVE is an experimental online archive of the mid-’90s to early-’00s transgender/transsexual internet.', link: 'https://myyyyyer.github.io/404archive/' },
+  { file: 'lilly.glb',            label: 'Eileen',             description: '(Placeholder 3D Scan, To be Added)', link: 'https://www.are.na/eileen-ramos/meaningful-index-cards' },
+  { file: 'lilly.glb',            label: 'Lily Gabriel',       description: '(Placeholder 3D Scan, To be Added)', link: 'https://liga6085.github.io/PazyrykSwan/' },
+  { file: 'oldmac_computer_only_v2.glb',            label: 'Sean Carroll',               description: '', link: 'https://seanzshow1.github.io/art_1' },
+  { file: 'ekta_srk.glb',              label: 'Ekta',                description: '', link: 'https://srkeks.github.io/king-khan-kached/' },
+  { file: 'lilly.glb',              label: 'Marina',              description: '(Placeholder 3D Scan, To be Added)', link: 'https://mrncrds.github.io/bom-dia-archive/' },
+  { file: 'lilly.glb',              label: 'Leyla',                description: '(Placeholder 3D Scan, To be Added)', link: '' },
+  { file: 'daria.glb',              label: 'Dafia',              description: '', link: 'https://lshfn.github.io/shablony/' },
+];
+
+document.getElementById('artist-count').textContent = MODELS.length;
+
+
+// ── Scene ──
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0a0a0a);
+scene.fog = new THREE.Fog(0x0a0a0a, 12, 35);
+
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
+camera.position.set(0, 5, 14);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
+document.body.appendChild(renderer.domElement);
+
+// ── Controls ──
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 1, 0);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.maxPolarAngle = Math.PI / 2 + 0.1;
+controls.minDistance = 4;
+controls.maxDistance = 25;
+controls.update();
+
+// ── Lights ──
+scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+const dirLight = new THREE.DirectionalLight(0xffeedd, 2.5);
+dirLight.position.set(5, 12, 5);
+dirLight.castShadow = true;
+dirLight.shadow.mapSize.set(2048, 2048);
+dirLight.shadow.camera.near = 0.1;
+dirLight.shadow.camera.far = 40;
+dirLight.shadow.camera.left = -12;
+dirLight.shadow.camera.right = 12;
+dirLight.shadow.camera.top = 12;
+dirLight.shadow.camera.bottom = -12;
+dirLight.shadow.bias = -0.002;
+scene.add(dirLight);
+
+const fillLight = new THREE.DirectionalLight(0x8899cc, 0.8);
+fillLight.position.set(-5, 6, -4);
+scene.add(fillLight);
+
+const rimLight = new THREE.PointLight(0xff6633, 1.5, 20);
+rimLight.position.set(-5, 4, -3);
+scene.add(rimLight);
+
+// ── Ground ──
+const groundMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(40, 40),
+  new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.85, metalness: 0.1 })
+);
+groundMesh.rotation.x = -Math.PI / 2;
+groundMesh.receiveShadow = true;
+scene.add(groundMesh);
+
+const grid = new THREE.GridHelper(40, 80, 0x1a1a1a, 0x1a1a1a);
+grid.position.y = 0.005;
+scene.add(grid);
+
+// ── Physics ──
+const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.82, 0) });
+world.broadphase = new CANNON.SAPBroadphase(world);
+world.allowSleep = true;
+world.defaultContactMaterial.friction = 0.5;
+world.defaultContactMaterial.restitution = 0.25;
+
+const groundBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane() });
+groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
+world.addBody(groundBody);
+
+const wallShape = new CANNON.Plane();
+[
+  { pos: [10, 5, 0], rot: [0, -Math.PI / 2, 0] },
+  { pos: [-10, 5, 0], rot: [0, Math.PI / 2, 0] },
+  { pos: [0, 5, 10], rot: [0, Math.PI, 0] },
+  { pos: [0, 5, -10], rot: [0, 0, 0] },
+].forEach(w => {
+  const b = new CANNON.Body({ mass: 0, shape: wallShape });
+  b.position.set(...w.pos);
+  b.quaternion.setFromEuler(...w.rot);
+  world.addBody(b);
+});
+
+// ── Load Models ──
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/libs/draco/');
+const loader = new GLTFLoader();
+loader.setDRACOLoader(dracoLoader);
+
+const objectBodies = [];
+const statusEl = document.getElementById('load-status');
+const barEl = document.getElementById('load-bar-inner');
+
+// Cache loaded scenes so lilly.glb (used by Mishka + Myer) only loads once
+const fileCache = {};
+
+async function loadAllModels() {
+  const loaded = [];
+  for (let i = 0; i < MODELS.length; i++) {
+    const m = MODELS[i];
+    statusEl.textContent = `Loading ${m.label} (${i + 1}/${MODELS.length})`;
+    barEl.style.width = `${((i) / MODELS.length) * 100}%`;
+
+    try {
+      let gltfScene;
+      if (fileCache[m.file]) {
+        gltfScene = fileCache[m.file];
+      } else {
+        const gltf = await new Promise((res, rej) => {
+          loader.load(
+            MODEL_DIR + m.file, res,
+            (p) => { if (p.total) statusEl.textContent = `Loading ${m.label} (${i+1}/${MODELS.length}) — ${Math.round(p.loaded/p.total*100)}%`; },
+            (err) => { console.error(`Failed: ${m.file}`, err); rej(err); }
+          );
+        });
+        fileCache[m.file] = gltf.scene;
+        gltfScene = gltf.scene;
+      }
+      loaded.push({ scene: gltfScene, label: m.label, description: m.description, link: m.link });
+    } catch (e) {
+      console.warn(`Skipped ${m.file}`);
+    }
+  }
+  barEl.style.width = '100%';
+  statusEl.textContent = `Dropping ${loaded.length} objects...`;
+  return loaded;
+}
+
+const models = await loadAllModels();
+
+function createPhysicsObject(templateScene, label, description, link, position) {
+  const model = templateScene.clone();
+
+  model.traverse(child => {
+    if (child.isMesh) {
+      child.castShadow = true;
+      child.receiveShadow = true;
+      if (child.material) child.material = child.material.clone();
+    }
+  });
+
+  const bbox = new THREE.Box3().setFromObject(model);
+  const size = new THREE.Vector3();
+  bbox.getSize(size);
+  const center = new THREE.Vector3();
+  bbox.getCenter(center);
+
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const scale = 1.2 / maxDim;
+
+  model.scale.setScalar(scale);
+  model.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+
+  const wrapper = new THREE.Group();
+  wrapper.add(model);
+  scene.add(wrapper);
+
+  const halfExtents = new CANNON.Vec3(
+    (size.x * scale) / 2, (size.y * scale) / 2, (size.z * scale) / 2
+  );
+  const body = new CANNON.Body({
+    mass: 2,
+    shape: new CANNON.Box(halfExtents),
+    position: new CANNON.Vec3(position.x, position.y, position.z),
+    linearDamping: 0.3,
+    angularDamping: 0.4,
+  });
+  body.quaternion.setFromEuler(
+    Math.random() * Math.PI * 2,
+    Math.random() * Math.PI * 2,
+    Math.random() * Math.PI * 2
+  );
+  world.addBody(body);
+
+  const entry = { mesh: wrapper, body, halfExtents, label, description, link };
+  objectBodies.push(entry);
+  return entry;
+}
+
+models.forEach((m, i) => {
+  const angle = (i / models.length) * Math.PI * 2;
+  const radius = 1.5 + Math.random() * 2;
+  const pos = {
+    x: Math.cos(angle) * radius + (Math.random() - 0.5),
+    y: 4 + i * 2.5,
+    z: Math.sin(angle) * radius + (Math.random() - 0.5),
+  };
+  setTimeout(() => createPhysicsObject(m.scene, m.label, m.description, m.link, pos), i * 400);
+});
+
+setTimeout(() => document.getElementById('loading').classList.add('hidden'), 600);
+
+// ── Card Modal ──
+const cardOverlay = document.getElementById('card-overlay');
+const cardName = document.getElementById('card-name');
+const cardDesc = document.getElementById('card-description');
+const cardLink = document.getElementById('card-link');
+const cardClose = document.getElementById('card-close');
+let cardOpen = false;
+
+function openCard(obj) {
+  cardName.textContent = obj.label;
+  cardDesc.textContent = obj.description;
+  if (obj.link) {
+    cardLink.href = obj.link;
+    cardLink.classList.remove('disabled');
+    cardLink.textContent = 'go to archive';
+  } else {
+    cardLink.href = '#';
+    cardLink.classList.add('disabled');
+    cardLink.textContent = 'archive coming soon';
+  }
+  cardOverlay.classList.add('visible');
+  cardOpen = true;
+  controls.enabled = false;
+}
+
+function closeCard() {
+  cardOverlay.classList.remove('visible');
+  cardOpen = false;
+  controls.enabled = true;
+}
+
+cardClose.addEventListener('click', closeCard);
+cardOverlay.addEventListener('click', (e) => { if (e.target === cardOverlay) closeCard(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && cardOpen) closeCard(); });
+
+// ── Interaction ──
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let dragging = null;
+let pointerDownPos = null;
+const nameLabel = document.getElementById('name-label');
+
+function getMouseNDC(e) {
+  return new THREE.Vector2(
+    (e.clientX / innerWidth) * 2 - 1,
+    -(e.clientY / innerHeight) * 2 + 1
+  );
+}
+
+function findHitObject(ndc) {
+  raycaster.setFromCamera(ndc, camera);
+  const allMeshes = [];
+  objectBodies.forEach(o => o.mesh.traverse(c => { if (c.isMesh) allMeshes.push(c); }));
+  const hits = raycaster.intersectObjects(allMeshes, false);
+  if (hits.length === 0) return null;
+  const hitMesh = hits[0].object;
+  for (const obj of objectBodies) {
+    let match = false;
+    obj.mesh.traverse(c => { if (c === hitMesh) match = true; });
+    if (match) return { obj, point: hits[0].point };
+  }
+  return null;
+}
+
+renderer.domElement.addEventListener('pointermove', (e) => {
+  if (cardOpen) return;
+
+  if (dragging) {
+    mouse.copy(getMouseNDC(e));
+    raycaster.setFromCamera(mouse, camera);
+    const target = new THREE.Vector3();
+    raycaster.ray.intersectPlane(dragging.plane, target);
+    if (!target) return;
+    target.add(dragging.offset);
+    const hy = dragging.obj.halfExtents.y;
+    if (target.y < hy) target.y = hy;
+
+    const now = performance.now();
+    const dt = (now - dragging.prevTime) / 1000;
+    if (dt > 0.001) {
+      dragging.velocity.subVectors(target, dragging.prevPos).divideScalar(dt);
+      dragging.prevPos.copy(target);
+      dragging.prevTime = now;
+    }
+    dragging.obj.body.position.set(target.x, target.y, target.z);
+    return;
+  }
+
+  mouse.copy(getMouseNDC(e));
+  const hit = findHitObject(mouse);
+  if (hit) {
+    nameLabel.textContent = hit.obj.label;
+    nameLabel.style.opacity = '1';
+    renderer.domElement.style.cursor = 'pointer';
+  } else {
+    nameLabel.style.opacity = '0';
+    renderer.domElement.style.cursor = 'grab';
+  }
+});
+
+renderer.domElement.addEventListener('pointerdown', (e) => {
+  if (cardOpen) return;
+  mouse.copy(getMouseNDC(e));
+  pointerDownPos = { x: e.clientX, y: e.clientY };
+
+  const hit = findHitObject(mouse);
+  if (!hit) return;
+
+  e.preventDefault();
+  controls.enabled = false;
+  document.body.classList.add('dragging');
+
+  hit.obj.body.wakeUp();
+  hit.obj.body.type = CANNON.Body.KINEMATIC;
+
+  const planeNormal = new THREE.Vector3();
+  camera.getWorldDirection(planeNormal);
+  const dragPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(planeNormal, hit.point);
+  const offset = new THREE.Vector3().subVectors(
+    new THREE.Vector3(hit.obj.body.position.x, hit.obj.body.position.y, hit.obj.body.position.z),
+    hit.point
+  );
+
+  dragging = {
+    obj: hit.obj, plane: dragPlane, offset,
+    prevPos: new THREE.Vector3(hit.obj.body.position.x, hit.obj.body.position.y, hit.obj.body.position.z),
+    velocity: new THREE.Vector3(),
+    prevTime: performance.now(),
+  };
+
+  nameLabel.textContent = hit.obj.label;
+  nameLabel.style.opacity = '1';
+  document.getElementById('hint').style.opacity = '0';
+});
+
+const onPointerUp = (e) => {
+  if (!dragging) return;
+
+  const body = dragging.obj.body;
+  body.type = CANNON.Body.DYNAMIC;
+  body.wakeUp();
+
+  const dx = e.clientX - pointerDownPos.x;
+  const dy = e.clientY - pointerDownPos.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  if (dist < 6) {
+    // Click → open card
+    body.velocity.set(0, 0, 0);
+    body.angularVelocity.set(0, 0, 0);
+    openCard(dragging.obj);
+  } else {
+    // Drag → throw
+    const v = dragging.velocity;
+    v.clampScalar(-20, 20);
+    body.velocity.set(v.x, v.y, v.z);
+    body.angularVelocity.set(
+      (Math.random() - 0.5) * 5,
+      (Math.random() - 0.5) * 5,
+      (Math.random() - 0.5) * 5
+    );
+  }
+
+  dragging = null;
+  if (!cardOpen) controls.enabled = true;
+  document.body.classList.remove('dragging');
+  nameLabel.style.opacity = '0';
+  pointerDownPos = null;
+};
+renderer.domElement.addEventListener('pointerup', onPointerUp);
+renderer.domElement.addEventListener('pointerleave', onPointerUp);
+
+// ── Animate ──
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  world.step(1 / 60, clock.getDelta(), 3);
+
+  for (const { mesh, body } of objectBodies) {
+    mesh.position.copy(body.position);
+    mesh.quaternion.copy(body.quaternion);
+  }
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>
