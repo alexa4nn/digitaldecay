@@ -195,6 +195,185 @@
     transition: color 0.2s;
   }
   #card-close:hover { color: #fff; }
+
+  /* ── Iframe Overlay ── */
+  #iframe-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 60;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.85);
+  }
+  #iframe-overlay.visible { display: flex; }
+
+  #iframe-name {
+    font-family: 'Oceanside', cursive;
+    font-size: 32px;
+    font-style: italic;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  #iframe-container {
+    position: relative;
+    width: 85%;
+    height: 78%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    background: #888;
+    animation: cardIn 0.3s ease-out;
+  }
+
+  #iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #888;
+  }
+
+  #iframe-close {
+    position: absolute;
+    top: 12px; right: 14px;
+    width: 40px; height: 40px;
+    background: rgba(50,50,50,0.85);
+    border: none;
+    border-radius: 8px;
+    color: #ccc;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    z-index: 2;
+  }
+  #iframe-close:hover {
+    background: rgba(80,80,80,0.95);
+    color: #fff;
+  }
+
+  /* ── Index Link ── */
+  #index-link {
+    position: fixed;
+    top: 50px;
+    right: 60px;
+    z-index: 25;
+    font-family: 'Oceanside', cursive;
+    font-size: 20px;
+    font-style: italic;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  #index-link:hover { opacity: 0.6; }
+
+  /* ── Index Overlay ── */
+  #index-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 55;
+    background: #0a0a0a;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  #index-overlay.visible { display: flex; }
+
+  #index-header {
+    padding: 50px 60px 30px;
+    flex-shrink: 0;
+  }
+  #index-header h1 {
+    font-family: 'Oceanside', cursive;
+    font-size: 52px;
+    font-weight: 400;
+    font-style: italic;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  #index-back {
+    position: fixed;
+    top: 50px;
+    right: 60px;
+    z-index: 56;
+    font-family: 'Oceanside', cursive;
+    font-size: 20px;
+    font-style: italic;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.3s;
+    display: none;
+  }
+  #index-back:hover { opacity: 0.6; }
+
+  #index-list {
+    padding: 0 60px 60px;
+    flex: 1;
+  }
+
+  .index-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .index-thumb {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    background: #0a0a0a;
+    border-radius: 4px;
+  }
+
+  .index-name {
+    font-family: 'Oceanside', cursive;
+    font-size: 22px;
+    font-style: italic;
+    color: #fff;
+    width: 180px;
+    flex-shrink: 0;
+  }
+
+  .index-desc {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12px;
+    color: #777;
+    line-height: 1.6;
+    flex: 1;
+    max-height: 60px;
+    overflow: hidden;
+  }
+
+  .index-archive-link {
+    font-family: 'Oceanside', cursive;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+    padding: 12px 28px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .index-archive-link:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.5);
+  }
+  .index-archive-link.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -213,13 +392,32 @@
 
 <div id="hint">click an object to explore</div>
 <div id="name-label"></div>
+<a id="index-link">index</a>
+<a id="index-back">index</a>
+
+<!-- Index Overlay -->
+<div id="index-overlay">
+  <div id="index-header">
+    <h1>archive of archives</h1>
+  </div>
+  <div id="index-list"></div>
+</div>
 
 <div id="card-overlay">
   <div id="card">
     <button id="card-close">&times;</button>
     <div id="card-name"></div>
     <div id="card-description"></div>
-    <a id="card-link" href="#" target="_blank">go to archive</a>
+    <a id="card-link" href="#">go to archive</a>
+  </div>
+</div>
+
+<!-- Iframe Overlay -->
+<div id="iframe-overlay">
+  <div id="iframe-name"></div>
+  <div id="iframe-container">
+    <button id="iframe-close">&times;</button>
+    <iframe id="iframe-content" src="" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
   </div>
 </div>
 
@@ -266,7 +464,7 @@ const MODELS = [
   { file: 'cardoso-marina.glb',      label: 'Marina',            description: 'This is an ongoing collection of morning greeting images sent by my family members on WhatsApp, which I\'ve been saving since 2021. Sharing these kitschy images has been a common practice between them, specially from older members and mostly during the COVID-19 period. They are a mix of photos or illustrations (or both), often accompanied by cheerful, motivational, or religious messages to start the day on a positive note.<br><br>I really enjoyed the class, its pace, and the readings &lt;3 It made me feel more aware of the fragility of digital content and I\'m looking forward to archive more stuff in the future!', link: 'https://mrncrds.github.io/bom-dia-archive/' },
   { file: 'oldmac_computer_only_v2.glb', label: 'Sean Carroll',  description: 'My archive pulls together what I know about one of the first programming languages made for artists by Katherine Nash in 1970.<br><br>Art 1 let artists create ASCII art using Fortran and IBM mainframes.', link: 'https://seanzshow1.github.io/art_1/' },
   { file: 'ekta_srk.glb',            label: 'Ekta',              description: 'King Khan, Katched is a born-digital artwork tracing Shah Rukh Khan\'s presence on the early internet. It uses the star as a way to read the web itself: what it preserved, what it let rot, and who was doing the preserving.<br><br>This course offered a rare opportunity to move from concept to execution in a way that felt genuinely generative. The process of ideating, building, and iterating on a live archive made clear how meaning accrues through making.', link: 'https://srkeks.github.io/king-khan-kached/' },
-  { file: 'lilly.glb',               label: 'Daria Ivans',        description: 'This project explores the culture of Photoshop templates, frames, textures, and design assets that circulated across the Russian internet in the 2000s and early 2010s. Used for graduation albums, wedding collages, portraits, and personal websites, these files formed a vernacular visual culture built on sharing, customization, and piracy.<br><br>Today, much of this material survives only as preview images, broken download links, and forgotten usernames. Through these ghost archives, the project examines templates as unfinished images, traces of collective authorship, and artifacts of a transitional moment between physical and digital media, before the rise of AI-generated imagery.', link: 'https://lshfn.github.io/shablony/' },
+  { file: 'daria.glb',               label: 'Daria Ivans',        description: 'This project explores the culture of Photoshop templates, frames, textures, and design assets that circulated across the Russian internet in the 2000s and early 2010s. Used for graduation albums, wedding collages, portraits, and personal websites, these files formed a vernacular visual culture built on sharing, customization, and piracy.<br><br>Today, much of this material survives only as preview images, broken download links, and forgotten usernames. Through these ghost archives, the project examines templates as unfinished images, traces of collective authorship, and artifacts of a transitional moment between physical and digital media, before the rise of AI-generated imagery.', link: 'https://lshfn.github.io/shablony/' },
 ];
 
 document.getElementById('artist-count').textContent = MODELS.length;
@@ -369,7 +567,6 @@ const objectBodies = [];
 const statusEl = document.getElementById('load-status');
 const barEl = document.getElementById('load-bar-inner');
 
-// Cache loaded scenes so lilly.glb (used by Mishka + Myer) only loads once
 const fileCache = {};
 
 async function loadAllModels() {
@@ -473,19 +670,26 @@ const cardOverlay = document.getElementById('card-overlay');
 const cardName = document.getElementById('card-name');
 const cardDesc = document.getElementById('card-description');
 const cardLink = document.getElementById('card-link');
-const cardClose = document.getElementById('card-close');
+const cardCloseBtn = document.getElementById('card-close');
 let cardOpen = false;
 
+// ── Iframe Overlay ──
+const iframeOverlay = document.getElementById('iframe-overlay');
+const iframeName = document.getElementById('iframe-name');
+const iframeContent = document.getElementById('iframe-content');
+const iframeCloseBtn = document.getElementById('iframe-close');
+let iframeOpen = false;
+let currentCardObj = null;
+
 function openCard(obj) {
+  currentCardObj = obj;
   cardName.textContent = obj.label;
   cardDesc.innerHTML = obj.description || '';
   cardDesc.style.display = obj.description ? 'block' : 'none';
   if (obj.link) {
-    cardLink.href = obj.link;
     cardLink.classList.remove('disabled');
     cardLink.textContent = 'go to archive';
   } else {
-    cardLink.href = '#';
     cardLink.classList.add('disabled');
     cardLink.textContent = 'archive coming soon';
   }
@@ -497,12 +701,214 @@ function openCard(obj) {
 function closeCard() {
   cardOverlay.classList.remove('visible');
   cardOpen = false;
+  currentCardObj = null;
+  if (!iframeOpen) controls.enabled = true;
+}
+
+function openIframe(obj) {
+  iframeName.textContent = obj.label;
+  iframeContent.src = obj.link;
+  iframeOverlay.classList.add('visible');
+  iframeOpen = true;
+  closeCard();
+}
+
+function closeIframe() {
+  iframeOverlay.classList.remove('visible');
+  iframeContent.src = '';
+  iframeOpen = false;
   controls.enabled = true;
 }
 
-cardClose.addEventListener('click', closeCard);
+cardLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (currentCardObj && currentCardObj.link) {
+    openIframe(currentCardObj);
+  }
+});
+
+cardCloseBtn.addEventListener('click', closeCard);
 cardOverlay.addEventListener('click', (e) => { if (e.target === cardOverlay) closeCard(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && cardOpen) closeCard(); });
+
+iframeCloseBtn.addEventListener('click', closeIframe);
+iframeOverlay.addEventListener('click', (e) => { if (e.target === iframeOverlay) closeIframe(); });
+
+// ── Keyboard Movement ──
+const keys = {};
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (iframeOpen) closeIframe();
+    else if (cardOpen) closeCard();
+    else if (indexOpen) hideIndex();
+    return;
+  }
+  keys[e.key.toLowerCase()] = true;
+  // Prevent arrow keys from scrolling
+  if (['arrowup','arrowdown','arrowleft','arrowright'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
+document.addEventListener('keyup', (e) => {
+  keys[e.key.toLowerCase()] = false;
+});
+
+// ── Index Page ──
+const indexOverlay = document.getElementById('index-overlay');
+const indexList = document.getElementById('index-list');
+const indexLink = document.getElementById('index-link');
+const indexBack = document.getElementById('index-back');
+let indexOpen = false;
+
+// Thumbnail renderer — one shared WebGL context for all thumbnails
+const thumbSize = 160; // render at 2x for retina
+const thumbRenderer = new THREE.WebGLRenderer({ antialias: true });
+thumbRenderer.setClearColor(0x0a0a0a, 1);
+thumbRenderer.setSize(thumbSize, thumbSize);
+thumbRenderer.setPixelRatio(1);
+thumbRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+thumbRenderer.toneMappingExposure = 1.4;
+
+const thumbScene = new THREE.Scene();
+thumbScene.add(new THREE.AmbientLight(0xffffff, 0.8));
+const thumbDirLight = new THREE.DirectionalLight(0xffeedd, 2);
+thumbDirLight.position.set(3, 5, 4);
+thumbScene.add(thumbDirLight);
+
+const thumbCamera = new THREE.PerspectiveCamera(40, 1, 0.01, 50);
+thumbCamera.position.set(0, 0.5, 2.2);
+thumbCamera.lookAt(0, 0, 0);
+
+// Track thumb data for animation
+const thumbEntries = []; // { canvas, model, wrapper, angle }
+
+function buildIndex() {
+  indexList.innerHTML = '';
+  thumbEntries.length = 0;
+
+  const sorted = [...MODELS].sort((a, b) => {
+    const aHas = a.description ? 0 : 1;
+    const bHas = b.description ? 0 : 1;
+    return aHas - bHas;
+  });
+
+  sorted.forEach((m, i) => {
+    const row = document.createElement('div');
+    row.className = 'index-row';
+
+    // Thumbnail canvas (2D — we copy from the shared renderer)
+    const canvas = document.createElement('canvas');
+    canvas.className = 'index-thumb';
+    canvas.width = thumbSize;
+    canvas.height = thumbSize;
+
+    const name = document.createElement('div');
+    name.className = 'index-name';
+    name.textContent = m.label;
+
+    const desc = document.createElement('div');
+    desc.className = 'index-desc';
+    desc.innerHTML = m.description || '';
+
+    const link = document.createElement('a');
+    link.className = 'index-archive-link' + (m.link ? '' : ' disabled');
+    link.textContent = m.link ? 'go to archive' : 'coming soon';
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (m.link) {
+        openIframe({ label: m.label, link: m.link });
+      }
+    });
+
+    row.appendChild(canvas);
+    row.appendChild(name);
+    row.appendChild(desc);
+    row.appendChild(link);
+    indexList.appendChild(row);
+
+    // Find the loaded model for this entry
+    const loaded = models.find(lm => lm.label === m.label);
+    if (loaded) {
+      const clone = loaded.scene.clone();
+      const bbox = new THREE.Box3().setFromObject(clone);
+      const size = new THREE.Vector3();
+      bbox.getSize(size);
+      const center = new THREE.Vector3();
+      bbox.getCenter(center);
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const s = 1.0 / maxDim;
+      clone.scale.setScalar(s);
+      clone.position.set(-center.x * s, -center.y * s, -center.z * s);
+
+      const wrapper = new THREE.Group();
+      wrapper.add(clone);
+
+      thumbEntries.push({ canvas, wrapper, angle: Math.random() * Math.PI * 2 });
+    } else {
+      thumbEntries.push({ canvas, wrapper: null, angle: 0 });
+    }
+  });
+}
+
+// Render thumbnails in round-robin (a few per frame for performance)
+let thumbIndex = 0;
+const thumbsPerFrame = 3;
+
+function renderThumbnails() {
+  if (!indexOpen || thumbEntries.length === 0) return;
+
+  for (let n = 0; n < thumbsPerFrame; n++) {
+    const entry = thumbEntries[thumbIndex % thumbEntries.length];
+    thumbIndex++;
+
+    if (!entry.wrapper) continue;
+
+    // Clear previous children (only keep lights)
+    thumbScene.children.forEach(c => {
+      if (c.isGroup) thumbScene.remove(c);
+    });
+    // Remove old groups
+    for (let i = thumbScene.children.length - 1; i >= 0; i--) {
+      if (thumbScene.children[i].isGroup) thumbScene.remove(thumbScene.children[i]);
+    }
+
+    entry.angle += 0.03;
+    entry.wrapper.rotation.y = entry.angle;
+    thumbScene.add(entry.wrapper);
+
+    thumbRenderer.render(thumbScene, thumbCamera);
+
+    // Copy to the row's 2D canvas
+    const ctx = entry.canvas.getContext('2d');
+    ctx.clearRect(0, 0, thumbSize, thumbSize);
+    ctx.drawImage(thumbRenderer.domElement, 0, 0);
+
+    thumbScene.remove(entry.wrapper);
+  }
+}
+
+function showIndex() {
+  buildIndex();
+  indexOverlay.classList.add('visible');
+  indexLink.style.display = 'none';
+  indexBack.style.display = 'block';
+  indexOpen = true;
+  controls.enabled = false;
+}
+
+function hideIndex() {
+  indexOverlay.classList.remove('visible');
+  indexLink.style.display = 'block';
+  indexBack.style.display = 'none';
+  indexOpen = false;
+  controls.enabled = true;
+  // Clean up thumb wrappers from scene
+  thumbEntries.forEach(e => {
+    if (e.wrapper && e.wrapper.parent) e.wrapper.parent.remove(e.wrapper);
+  });
+}
+
+indexLink.addEventListener('click', showIndex);
+indexBack.addEventListener('click', hideIndex);
 
 // ── Interaction ──
 const raycaster = new THREE.Raycaster();
@@ -616,12 +1022,10 @@ const onPointerUp = (e) => {
   const dist = Math.sqrt(dx * dx + dy * dy);
 
   if (dist < 6) {
-    // Click → open card
     body.velocity.set(0, 0, 0);
     body.angularVelocity.set(0, 0, 0);
     openCard(dragging.obj);
   } else {
-    // Drag → throw
     const v = dragging.velocity;
     v.clampScalar(-20, 20);
     body.velocity.set(v.x, v.y, v.z);
@@ -643,6 +1047,9 @@ renderer.domElement.addEventListener('pointerleave', onPointerUp);
 
 // ── Animate ──
 const clock = new THREE.Clock();
+const moveSpeed = 0.12;
+const bounds = 9.5; // walls are at ±10, keep camera slightly inside
+
 function animate() {
   requestAnimationFrame(animate);
   world.step(1 / 60, clock.getDelta(), 3);
@@ -652,8 +1059,45 @@ function animate() {
     mesh.quaternion.copy(body.quaternion);
   }
 
+  // ── WASD / Arrow key camera movement ──
+  if (!cardOpen && !iframeOpen) {
+    // Get camera's forward and right directions (flattened to XZ plane)
+    const forward = new THREE.Vector3();
+    camera.getWorldDirection(forward);
+    forward.y = 0;
+    forward.normalize();
+
+    const right = new THREE.Vector3();
+    right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+
+    const move = new THREE.Vector3();
+
+    if (keys['w'] || keys['arrowup'])    move.add(forward);
+    if (keys['s'] || keys['arrowdown'])  move.sub(forward);
+    if (keys['a'] || keys['arrowleft'])  move.sub(right);
+    if (keys['d'] || keys['arrowright']) move.add(right);
+
+    if (move.lengthSq() > 0) {
+      move.normalize().multiplyScalar(moveSpeed);
+
+      // Move both camera and orbit target together
+      const newCamPos = camera.position.clone().add(move);
+      const newTarget = controls.target.clone().add(move);
+
+      // Clamp to bounds
+      newCamPos.x = Math.max(-bounds, Math.min(bounds, newCamPos.x));
+      newCamPos.z = Math.max(-bounds, Math.min(bounds, newCamPos.z));
+      newTarget.x = Math.max(-bounds, Math.min(bounds, newTarget.x));
+      newTarget.z = Math.max(-bounds, Math.min(bounds, newTarget.z));
+
+      camera.position.copy(newCamPos);
+      controls.target.copy(newTarget);
+    }
+  }
+
   controls.update();
   renderer.render(scene, camera);
+  renderThumbnails();
 }
 animate();
 
