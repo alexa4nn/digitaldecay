@@ -374,6 +374,60 @@
     opacity: 0.3;
     pointer-events: none;
   }
+
+  /* ── Detail Popup (index close-up view) ── */
+  #detail-popup {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 57;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+  }
+  #detail-popup.visible { display: flex; }
+
+  #detail-box {
+    background: #111;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 32px;
+    width: 560px;
+    max-width: 90%;
+    position: relative;
+    animation: cardIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #detail-canvas {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    background: #111;
+  }
+
+  #detail-close {
+    position: absolute;
+    top: 14px; right: 16px;
+    width: 40px; height: 40px;
+    background: rgba(50,50,50,0.85);
+    border: none;
+    border-radius: 8px;
+    color: #ccc;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    z-index: 2;
+  }
+  #detail-close:hover {
+    background: rgba(80,80,80,0.95);
+    color: #fff;
+  }
 </style>
 </head>
 <body>
@@ -401,6 +455,14 @@
     <h1>archive of archives</h1>
   </div>
   <div id="index-list"></div>
+</div>
+
+<!-- Detail Popup (close-up 3D view) -->
+<div id="detail-popup">
+  <div id="detail-box">
+    <button id="detail-close">&times;</button>
+    <canvas id="detail-canvas"></canvas>
+  </div>
 </div>
 
 <div id="card-overlay">
@@ -738,6 +800,7 @@ const keys = {};
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if (iframeOpen) closeIframe();
+    else if (detailOpen) closeDetail();
     else if (cardOpen) closeCard();
     else if (indexOpen) hideIndex();
     return;
@@ -819,6 +882,14 @@ function buildIndex() {
       }
     });
 
+    canvas.style.cursor = 'pointer';
+    name.style.cursor = 'pointer';
+
+    const loaded = models.find(lm => lm.label === m.label);
+
+    canvas.addEventListener('click', () => { if (loaded) openDetail(loaded); });
+    name.addEventListener('click', () => { if (loaded) openDetail(loaded); });
+
     row.appendChild(canvas);
     row.appendChild(name);
     row.appendChild(desc);
@@ -826,7 +897,6 @@ function buildIndex() {
     indexList.appendChild(row);
 
     // Find the loaded model for this entry
-    const loaded = models.find(lm => lm.label === m.label);
     if (loaded) {
       const clone = loaded.scene.clone();
       const bbox = new THREE.Box3().setFromObject(clone);
@@ -909,6 +979,94 @@ function hideIndex() {
 
 indexLink.addEventListener('click', showIndex);
 indexBack.addEventListener('click', hideIndex);
+
+// ── Detail Popup (close-up 3D) ──
+const detailPopup = document.getElementById('detail-popup');
+const detailCanvas = document.getElementById('detail-canvas');
+const detailCloseBtn = document.getElementById('detail-close');
+let detailOpen = false;
+let detailWrapper = null;
+let detailAngle = 0;
+
+const detailRenderer = new THREE.WebGLRenderer({ canvas: detailCanvas, antialias: true });
+detailRenderer.setClearColor(0x111111, 1);
+detailRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+detailRenderer.toneMappingExposure = 1.4;
+
+const detailScene = new THREE.Scene();
+detailScene.add(new THREE.AmbientLight(0xffffff, 0.7));
+const detailDir = new THREE.DirectionalLight(0xffeedd, 2.2);
+detailDir.position.set(3, 5, 4);
+detailScene.add(detailDir);
+const detailFill = new THREE.DirectionalLight(0x8899cc, 0.6);
+detailFill.position.set(-4, 3, -2);
+detailScene.add(detailFill);
+
+const detailCamera = new THREE.PerspectiveCamera(35, 4 / 3, 0.01, 50);
+detailCamera.position.set(0, 0.4, 2.4);
+detailCamera.lookAt(0, 0, 0);
+
+function openDetail(modelData) {
+  // Clone and normalize
+  const clone = modelData.scene.clone();
+  clone.traverse(child => {
+    if (child.isMesh && child.material) child.material = child.material.clone();
+  });
+  const bbox = new THREE.Box3().setFromObject(clone);
+  const size = new THREE.Vector3();
+  bbox.getSize(size);
+  const center = new THREE.Vector3();
+  bbox.getCenter(center);
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const s = 1.0 / maxDim;
+  clone.scale.setScalar(s);
+  clone.position.set(-center.x * s, -center.y * s, -center.z * s);
+
+  if (detailWrapper) detailScene.remove(detailWrapper);
+  detailWrapper = new THREE.Group();
+  detailWrapper.add(clone);
+  detailScene.add(detailWrapper);
+  detailAngle = 0;
+
+  // Show popup first so canvas has dimensions
+  detailPopup.classList.add('visible');
+  detailOpen = true;
+
+  // Size renderer on next frame when layout is computed
+  requestAnimationFrame(() => {
+    const rect = detailCanvas.getBoundingClientRect();
+    const dpr = Math.min(devicePixelRatio, 2);
+    const w = Math.round(rect.width * dpr);
+    const h = Math.round(rect.height * dpr);
+    detailCanvas.width = w;
+    detailCanvas.height = h;
+    detailRenderer.setSize(w, h, false);
+    detailCamera.aspect = rect.width / rect.height;
+    detailCamera.updateProjectionMatrix();
+  });
+}
+
+function closeDetail() {
+  detailPopup.classList.remove('visible');
+  if (detailWrapper) {
+    detailScene.remove(detailWrapper);
+    detailWrapper = null;
+  }
+  detailOpen = false;
+}
+
+function renderDetail() {
+  if (!detailOpen || !detailWrapper) return;
+  detailAngle += 0.01;
+  detailWrapper.rotation.y = detailAngle;
+
+  // Ensure wrapper is in scene
+  if (!detailWrapper.parent) detailScene.add(detailWrapper);
+  detailRenderer.render(detailScene, detailCamera);
+}
+
+detailCloseBtn.addEventListener('click', closeDetail);
+detailPopup.addEventListener('click', (e) => { if (e.target === detailPopup) closeDetail(); });
 
 // ── Interaction ──
 const raycaster = new THREE.Raycaster();
@@ -1098,6 +1256,7 @@ function animate() {
   controls.update();
   renderer.render(scene, camera);
   renderThumbnails();
+  renderDetail();
 }
 animate();
 
