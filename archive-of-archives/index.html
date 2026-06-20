@@ -11,9 +11,9 @@
     font-weight: normal;
     font-style: normal;
   }
-
+ 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
   body {
     overflow: hidden;
     background: #0a0a0a;
@@ -22,7 +22,7 @@
   }
   body.dragging { cursor: grabbing; }
   canvas { display: block; }
-
+ 
   .vignette {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -30,7 +30,7 @@
     z-index: 5;
     background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.5) 100%);
   }
-
+ 
   #header {
     position: fixed;
     top: 50px;
@@ -54,7 +54,7 @@
     color: #ccc;
     line-height: 1.7;
   }
-
+ 
   #hint {
     position: fixed;
     bottom: 28px;
@@ -68,7 +68,7 @@
     color: #444;
     transition: opacity 0.8s;
   }
-
+ 
   #loading {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -103,7 +103,7 @@
     height: 100%; width: 0%;
     background: #888; transition: width 0.3s;
   }
-
+ 
   #name-label {
     position: fixed;
     bottom: 55px;
@@ -119,7 +119,7 @@
     transition: opacity 0.3s;
     white-space: nowrap;
   }
-
+ 
   /* ── Card Modal ── */
   #card-overlay {
     position: fixed;
@@ -132,7 +132,7 @@
     backdrop-filter: blur(2px);
   }
   #card-overlay.visible { display: flex; }
-
+ 
   #card {
     background: #111;
     border: 1.5px solid rgba(255,255,255,0.25);
@@ -147,7 +147,7 @@
     from { opacity: 0; transform: translateY(16px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
   }
-
+ 
   #card-name {
     font-family: 'Oceanside', cursive;
     font-size: 36px;
@@ -195,7 +195,7 @@
     transition: color 0.2s;
   }
   #card-close:hover { color: #fff; }
-
+ 
   /* ── Iframe Overlay ── */
   #iframe-overlay {
     position: fixed;
@@ -208,7 +208,7 @@
     background: rgba(0,0,0,0.85);
   }
   #iframe-overlay.visible { display: flex; }
-
+ 
   #iframe-name {
     font-family: 'Oceanside', cursive;
     font-size: 32px;
@@ -216,7 +216,7 @@
     color: #fff;
     margin-bottom: 12px;
   }
-
+ 
   #iframe-container {
     position: relative;
     width: 85%;
@@ -227,14 +227,14 @@
     background: #888;
     animation: cardIn 0.3s ease-out;
   }
-
+ 
   #iframe-container iframe {
     width: 100%;
     height: 100%;
     border: none;
     background: #888;
   }
-
+ 
   #iframe-close {
     position: absolute;
     top: 12px; right: 14px;
@@ -255,7 +255,7 @@
     background: rgba(80,80,80,0.95);
     color: #fff;
   }
-
+ 
   /* ── Index Link ── */
   #index-link {
     position: fixed;
@@ -271,7 +271,7 @@
     transition: opacity 0.3s;
   }
   #index-link:hover { opacity: 0.6; }
-
+ 
   /* ── Index Overlay ── */
   #index-overlay {
     position: fixed;
@@ -283,7 +283,7 @@
     overflow-y: auto;
   }
   #index-overlay.visible { display: flex; }
-
+ 
   #index-header {
     padding: 50px 60px 30px;
     flex-shrink: 0;
@@ -296,7 +296,7 @@
     color: #fff;
     line-height: 1.2;
   }
-
+ 
   #index-back {
     position: fixed;
     top: 50px;
@@ -312,12 +312,12 @@
     display: none;
   }
   #index-back:hover { opacity: 0.6; }
-
+ 
   #index-list {
     padding: 0 60px 60px;
     flex: 1;
   }
-
+ 
   .index-row {
     display: flex;
     align-items: center;
@@ -325,7 +325,7 @@
     padding: 28px 0;
     border-top: 1px solid rgba(255,255,255,0.08);
   }
-
+ 
   .index-thumb {
     width: 80px;
     height: 80px;
@@ -333,7 +333,7 @@
     background: #0a0a0a;
     border-radius: 4px;
   }
-
+ 
   .index-name {
     font-family: 'Oceanside', cursive;
     font-size: 22px;
@@ -342,7 +342,7 @@
     width: 180px;
     flex-shrink: 0;
   }
-
+ 
   .index-desc {
     font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
@@ -352,7 +352,7 @@
     max-height: 60px;
     overflow: hidden;
   }
-
+ 
   .index-archive-link {
     font-family: 'Oceanside', cursive;
     font-size: 14px;
@@ -374,7 +374,7 @@
     opacity: 0.3;
     pointer-events: none;
   }
-
+ 
   /* ── Detail Popup (index close-up view) ── */
   #detail-popup {
     position: fixed;
@@ -386,7 +386,7 @@
     background: rgba(0,0,0,0.5);
   }
   #detail-popup.visible { display: flex; }
-
+ 
   #detail-box {
     background: #111;
     border: 1.5px solid rgba(255,255,255,0.25);
@@ -400,14 +400,14 @@
     flex-direction: column;
     align-items: center;
   }
-
+ 
   #detail-canvas {
     width: 100%;
     aspect-ratio: 4 / 3;
     border-radius: 8px;
     background: #111;
   }
-
+ 
   #detail-close {
     position: absolute;
     top: 14px; right: 16px;
@@ -431,24 +431,24 @@
 </style>
 </head>
 <body>
-
+ 
 <div id="loading">
   <div class="spinner"></div>
   <div id="load-status">Loading models...</div>
   <div id="load-bar-outer"><div id="load-bar-inner"></div></div>
 </div>
 <div class="vignette"></div>
-
+ 
 <div id="header">
   <h1>archive of archives</h1>
   <p>Digital Decay and Afterlives took place during the months of April and May in 2026. This archive of archives is composed of <span id="artist-count"></span> computational artists' 3D scanned lyrical artifacts that represent a piece of their own archival findings.</p>
 </div>
-
+ 
 <div id="hint">click an object to explore</div>
 <div id="name-label"></div>
 <a id="index-link">index</a>
 <a id="index-back">index</a>
-
+ 
 <!-- Index Overlay -->
 <div id="index-overlay">
   <div id="index-header">
@@ -456,7 +456,7 @@
   </div>
   <div id="index-list"></div>
 </div>
-
+ 
 <!-- Detail Popup (close-up 3D view) -->
 <div id="detail-popup">
   <div id="detail-box">
@@ -464,7 +464,7 @@
     <canvas id="detail-canvas"></canvas>
   </div>
 </div>
-
+ 
 <div id="card-overlay">
   <div id="card">
     <button id="card-close">&times;</button>
@@ -473,7 +473,7 @@
     <a id="card-link" href="#">go to archive</a>
   </div>
 </div>
-
+ 
 <!-- Iframe Overlay -->
 <div id="iframe-overlay">
   <div id="iframe-name"></div>
@@ -482,7 +482,7 @@
     <iframe id="iframe-content" src="" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
   </div>
 </div>
-
+ 
 <script type="importmap">
 {
   "imports": {
@@ -492,53 +492,53 @@
   }
 }
 </script>
-
+ 
 <script type="module">
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as CANNON from 'cannon-es';
-
+ 
 // ══════════════════════════════════════════════════════════
 //  MODEL REGISTRY — from the class spreadsheet
 //  Edit descriptions here once students submit them
 // ══════════════════════════════════════════════════════════
 const MODEL_DIR = '3D Scans/';
 const MODELS = [
-  { file: 'daria.glb',               label: 'Daria Ivans',        description: 'This project explores the culture of Photoshop templates, frames, textures, and design assets that circulated across the Russian internet in the 2000s and early 2010s. Used for graduation albums, wedding collages, portraits, and personal websites, these files formed a vernacular visual culture built on sharing, customization, and piracy.<br><br>Today, much of this material survives only as preview images, broken download links, and forgotten usernames. Through these ghost archives, the project examines templates as unfinished images, traces of collective authorship, and artifacts of a transitional moment between physical and digital media, before the rise of AI-generated imagery.', link: 'https://lshfn.github.io/shablony/' },
-  { file: 'Addis_S.glb',             label: 'Addis Smith',       description: 'An archive of my time in Berlin during a study away in 2023 with other colleagues. Over 1400+ images, videos, and screenshots across an old S21+ device, Instagram, and screenshots. I hoped to capture the memory of my time in Berlin, along with the decay of data that have become poor images, or missing altogether due to challenges with technology and content management across different platforms.<br><br>During the 10 weeks of this class, I was quite intimidated by the idea of coding, still am, but I have surprised myself in the process of discovery and building. This class has changed my perspective upon how I use or interact with code/internet as part of my creative process as a designer and curator. I thoroughly enjoyed the readings, the lectures, and seeing other classmates and their incredibly creative work.', link: 'https://imaddis.github.io/Away-in-Berlin-Archive/index.html' },
-  { file: 'BMO_v7.glb',              label: 'Paul',              description: 'A collection of found objects and associated Superzooms (a now-defunct (I think?) video filter on Instagram) that I took from Jan 2020\u2013Apr 2021!<br><br>Some disconnected thoughts (\u201CAN ASSEMBLAGE OF THOUGHTS\u201D (!)):<br>Re: Ian Rothwell: surfing \u2192 scrolling (from Coda to Postinternet Art &amp; Its Afterlives)<br>Scrolling \u2192 ambience?<br>Ambience, vibes, attention (to digital decay, but also physical decay? Though not all of the objects in my archive are sad objects, some are just cute/weird/whimsical/funny to me personally)<br><br>Is this an archive of my attention? Artifacts of my mediated performance of daily life on social media (personal, but also don\'t want to be perceived, so there is a kind of distance/detachment (how does this relate to sincerity/authenticity?)), then making it static/ambient. Attention economy vs. agency.<br>To archive and to be archived is to be seen, but also to be given agency?', link: 'https://paulyshwang.github.io/superzoom-archive/' },
-  { file: 'sofya.glb',               label: 'Sofya',             description: 'Had such an amazing time in the class!! I especially enjoyed learning about all the different ways of collecting web data and possibilities of reusing it for the purposes of preservation &lt;3', link: 'https://notsonya.github.io/digi_loss/' },
-  { file: 'oldmac_computer_only_v2.glb', label: 'Sean Carroll',  description: 'My archive pulls together what I know about one of the first programming languages made for artists by Katherine Nash in 1970.<br><br>Art 1 let artists create ASCII art using Fortran and IBM mainframes.', link: 'https://seanzshow1.github.io/art_1/' },
-  { file: 'yan.glb',                 label: 'Yan',               description: 'A digital archive of flash games that shifts the focus from games themselves to their afterlives: unwrapping, tracing, and archiving how they are preserved and remembered through the fragments that now contextualize them.<br><br>This class has been such an enriching experience! I learnt so much from this class and I\'m so grateful for our wonderful teachers and inspiring cohorts.', link: 'https://yl8110.github.io/archive-of-flash-games/' },
   { file: 'kiki_s-book.glb',         label: 'Kiki',              description: '', link: 'https://kiki.directory/archive/lgn' },
   { file: 'emily-VHS.glb',           label: 'Emily Leach',       description: 'Branching pathways to interact with a locked archive of guerilla archivist Marion Stoke\'s personal writing hosted on the Internet Archive.<br><br>So grateful &amp; excited to keep thinking about the fragility/preservation/perservation of digital information &lt;3', link: 'https://e-dot-leach.github.io/remanence/' },
-  { file: 'cardoso-marina.glb',      label: 'Marina',            description: 'This is an ongoing collection of morning greeting images sent by my family members on WhatsApp, which I\'ve been saving since 2021. Sharing these kitschy images has been a common practice between them, specially from older members and mostly during the COVID-19 period. They are a mix of photos or illustrations (or both), often accompanied by cheerful, motivational, or religious messages to start the day on a positive note.<br><br>I really enjoyed the class, its pace, and the readings &lt;3 It made me feel more aware of the fragility of digital content and I\'m looking forward to archive more stuff in the future!', link: 'https://mrncrds.github.io/bom-dia-archive/' },
   { file: 'mishka_meditaciones.glb',  label: 'Mishka',            description: 'A poetic website gathering experiences from the dancefloor, may that be a club, a festival or a party. Currently static, the website will use dynamic retrieval to let dancers everywhere input into a digital archive of moving meditations.', link: 'https://mishkanemes.neocities.org/meditaciones' },
   { file: 'lipten-sabine.glb',       label: 'Sabine',            description: '', link: 'https://palmsized.statichost.page/' },
   { file: 'kaitlyn_manh_radio.glb',  label: 'Kaitlyn',           description: 'Self-indulgent look at 3 Vietnamese-American musicians with websites and their fans who were active in the 90\'s\u201300\'s.<br><br>This class helped me finally sit down and learn how to code my own website which I\'ve wanted to do for years! I was also introduced to time-sensitive art and early internet interactive media art, that made me want to think about how these pieces can be archived and how to present/reconstruct its missing elements.', link: 'https://tumshurt.github.io/banh-xeo/' },
+  { file: 'Addis_S.glb',             label: 'Addis Smith',       description: 'An archive of my time in Berlin during a study away in 2023 with other colleagues. Over 1400+ images, videos, and screenshots across an old S21+ device, Instagram, and screenshots. I hoped to capture the memory of my time in Berlin, along with the decay of data that have become poor images, or missing altogether due to challenges with technology and content management across different platforms.<br><br>During the 10 weeks of this class, I was quite intimidated by the idea of coding, still am, but I have surprised myself in the process of discovery and building. This class has changed my perspective upon how I use or interact with code/internet as part of my creative process as a designer and curator. I thoroughly enjoyed the readings, the lectures, and seeing other classmates and their incredibly creative work.', link: 'https://imaddis.github.io/Away-in-Berlin-Archive/index.html' },
   { file: 'harvey.glb',              label: 'Harvey Hayes',      description: 'A portrait of a person constructed through targeted ads; reveals how algorithms surveil and misinterpret identity.<br><br>The biggest takeaway from the class for me was finding information where it is missing. Not to fill in the gaps or necessarily to replace it, but to understand voids as information itself.', link: 'https://harvhaze.github.io/consumer-portrait/' },
   { file: 'kasiapluto.glb',          label: 'Kasia Pluto',       description: 'Archive of Speculative memories, Missing data, &amp; recovered images from a Tumblr blog that was active for nearly 10 years. I had SO much fun in the class, I learned SO much\u2014 I\'m still processing it all &amp; taking all the new info in, reviewing our notes, reading the readings, reviewing our work. It was such a jam packed 10 weeks!! It was so inspiring to see and work together on our projects. I\'m so honored to have been a part of the class with you all!! (and I got to learn how to code)', link: 'https://kasiapluto.github.io/my-archive/' },
   { file: 'Guy_mesh_glb.glb',        label: 'Talia Hamburg',     description: 'A living archive and open-data visualization mapping 684,000+ New York City trees and tracking the urban phenomenon of trash on trees in the wintertime (mainly). Built with NYC Open Data and community-contributed video documentation, welcoming every pedestrian, citizen, or just a random person to capture this visual sight and contribute to the archive.', link: 'https://taliahamburg.github.io/bags-on-trees/' },
   { file: 'kendall.glb',             label: 'Kenny Weiss-Close', description: 'An archive of post 9/11 flash games, meant to archive a specific era of hyperviolence and anti-SWANA bigotry.', link: 'https://sheherzog.github.io/binladenspritelibrary/index.html' },
   { file: 'hello_kitty_plush.glb',   label: 'Carolina',          description: 'How to Save a Life: An exploration and rediscovery of my childhood sense of self through creative expression, seeking to save and commemorate the stage of my life that I do not quite remember.<br><br>Digital Decay and Afterlives: Digital archives and physical archives are sisters and computers are inherently human and so are archives and I love to learn. Digital Decay and Afterlives Spring \'26 forever &lt;3', link: 'https://how-to-save-a-life.starstar.website/' },
+  { file: 'BMO_v7.glb',              label: 'Paul',              description: 'A collection of found objects and associated Superzooms (a now-defunct (I think?) video filter on Instagram) that I took from Jan 2020\u2013Apr 2021!<br><br>Some disconnected thoughts (\u201CAN ASSEMBLAGE OF THOUGHTS\u201D (!)):<br>Re: Ian Rothwell: surfing \u2192 scrolling (from Coda to Postinternet Art &amp; Its Afterlives)<br>Scrolling \u2192 ambience?<br>Ambience, vibes, attention (to digital decay, but also physical decay? Though not all of the objects in my archive are sad objects, some are just cute/weird/whimsical/funny to me personally)<br><br>Is this an archive of my attention? Artifacts of my mediated performance of daily life on social media (personal, but also don\'t want to be perceived, so there is a kind of distance/detachment (how does this relate to sincerity/authenticity?)), then making it static/ambient. Attention economy vs. agency.<br>To archive and to be archived is to be seen, but also to be given agency?', link: 'https://paulyshwang.github.io/superzoom-archive/' },
+  { file: 'sofya.glb',               label: 'Sofya',             description: 'Had such an amazing time in the class!! I especially enjoyed learning about all the different ways of collecting web data and possibilities of reusing it for the purposes of preservation &lt;3', link: 'https://notsonya.github.io/digi_loss/' },
+  { file: 'yan.glb',                 label: 'Yan',               description: 'A digital archive of flash games that shifts the focus from games themselves to their afterlives: unwrapping, tracing, and archiving how they are preserved and remembered through the fragments that now contextualize them.<br><br>This class has been such an enriching experience! I learnt so much from this class and I\'m so grateful for our wonderful teachers and inspiring cohorts.', link: 'https://yl8110.github.io/archive-of-flash-games/' },
   { file: 'anastasia.glb',           label: 'Anastasia',         description: '\'Skyper\' is a collection of screenshots of video chat with my grandparents. Since 2020 they have been learning how to use video call apps on their iPad\u2014the collection contains more than 800 screenshots and needs to be organised in a suitable logic, which is a work in progress at the moment.', link: 'https://julls115.github.io/web-archive-a/' },
   { file: 'myer_teeth.glb',          label: 'Myer',              description: '404 ARCHIVE is an experimental online archive of the mid-\'90s to early-\'00s transgender/transsexual internet.', link: 'https://myyyyyer.github.io/404archive/' },
   { file: 'lilly.glb',               label: 'Eileen',            description: 'Meaningful index cards are works that allow the writer to dive deeper, build projects, make connections, and to remember what\'s important. Whether it\'s a performance about ending and budding romances, observing connections across wide-ranging religions, or cooking the meal before every restaurant evening shift, each card carries reverence and resonance, like a portal for the reader. Digital Decay allowed me to think more deeply about what gets archived and what gets omitted and was such a great class to learn from. I feel like I\'ve become a better observer and artist due to the 10 weeks, and I can\'t wait to add lyric essays to my archive.', link: 'https://www.are.na/eileen-ramos/meaningful-index-cards' },
+  { file: 'cardoso-marina.glb',      label: 'Marina',            description: 'This is an ongoing collection of morning greeting images sent by my family members on WhatsApp, which I\'ve been saving since 2021. Sharing these kitschy images has been a common practice between them, specially from older members and mostly during the COVID-19 period. They are a mix of photos or illustrations (or both), often accompanied by cheerful, motivational, or religious messages to start the day on a positive note.<br><br>I really enjoyed the class, its pace, and the readings &lt;3 It made me feel more aware of the fragility of digital content and I\'m looking forward to archive more stuff in the future!', link: 'https://mrncrds.github.io/bom-dia-archive/' },
+  { file: 'oldmac_computer_only_v2.glb', label: 'Sean Carroll',  description: 'My archive pulls together what I know about one of the first programming languages made for artists by Katherine Nash in 1970.<br><br>Art 1 let artists create ASCII art using Fortran and IBM mainframes.', link: 'https://seanzshow1.github.io/art_1/' },
   { file: 'ekta_srk.glb',            label: 'Ekta',              description: 'King Khan, Katched is a born-digital artwork tracing Shah Rukh Khan\'s presence on the early internet. It uses the star as a way to read the web itself: what it preserved, what it let rot, and who was doing the preserving.<br><br>This course offered a rare opportunity to move from concept to execution in a way that felt genuinely generative. The process of ideating, building, and iterating on a live archive made clear how meaning accrues through making.', link: 'https://srkeks.github.io/king-khan-kached/' },
+  { file: 'daria.glb',               label: 'Daria Ivans',        description: 'This project explores the culture of Photoshop templates, frames, textures, and design assets that circulated across the Russian internet in the 2000s and early 2010s. Used for graduation albums, wedding collages, portraits, and personal websites, these files formed a vernacular visual culture built on sharing, customization, and piracy.<br>Today, much of this material survives only as preview images, broken download links, and forgotten usernames. Through these ghost archives, the project examines templates as unfinished images, traces of collective authorship, and artifacts of a transitional moment between physical and digital media, before the rise of AI-generated imagery.<br>This course was an absolute joy for me. I looked forward to every class and genuinely enjoyed being part of it. The topics we explored are exactly what I have been thinking about over the last few years: the instability of digital memory and the shift from the monumental archive toward distributed, community-shared afterlives of lost files. I would like to revisit many of the texts we discussed, as I think they will be valuable for my future PhD project. The technical assignments also pushed me to engage with tools I would normally avoid. By the end of the course, GitHub felt much more approachable, and I became more comfortable experimenting with code on my own.', link: 'https://lshfn.github.io/shablony/' },
 ];
-
+ 
 document.getElementById('artist-count').textContent = MODELS.length;
-
+ 
 // ── Scene ──
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0a0a0a);
 scene.fog = new THREE.Fog(0x0a0a0a, 12, 35);
-
+ 
 const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
 camera.position.set(0, 5, 14);
-
+ 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -547,7 +547,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.2;
 document.body.appendChild(renderer.domElement);
-
+ 
 // ── Controls ──
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1, 0);
@@ -557,10 +557,10 @@ controls.maxPolarAngle = Math.PI / 2 + 0.1;
 controls.minDistance = 4;
 controls.maxDistance = 25;
 controls.update();
-
+ 
 // ── Lights ──
 scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-
+ 
 const dirLight = new THREE.DirectionalLight(0xffeedd, 2.5);
 dirLight.position.set(5, 12, 5);
 dirLight.castShadow = true;
@@ -573,15 +573,15 @@ dirLight.shadow.camera.top = 12;
 dirLight.shadow.camera.bottom = -12;
 dirLight.shadow.bias = -0.002;
 scene.add(dirLight);
-
+ 
 const fillLight = new THREE.DirectionalLight(0x8899cc, 0.8);
 fillLight.position.set(-5, 6, -4);
 scene.add(fillLight);
-
+ 
 const rimLight = new THREE.PointLight(0xff6633, 1.5, 20);
 rimLight.position.set(-5, 4, -3);
 scene.add(rimLight);
-
+ 
 // ── Ground ──
 const groundMesh = new THREE.Mesh(
   new THREE.PlaneGeometry(40, 40),
@@ -590,22 +590,22 @@ const groundMesh = new THREE.Mesh(
 groundMesh.rotation.x = -Math.PI / 2;
 groundMesh.receiveShadow = true;
 scene.add(groundMesh);
-
+ 
 const grid = new THREE.GridHelper(40, 80, 0x1a1a1a, 0x1a1a1a);
 grid.position.y = 0.005;
 scene.add(grid);
-
+ 
 // ── Physics ──
 const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.82, 0) });
 world.broadphase = new CANNON.SAPBroadphase(world);
 world.allowSleep = true;
 world.defaultContactMaterial.friction = 0.5;
 world.defaultContactMaterial.restitution = 0.25;
-
+ 
 const groundBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane() });
 groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
 world.addBody(groundBody);
-
+ 
 const wallShape = new CANNON.Plane();
 [
   { pos: [10, 5, 0], rot: [0, -Math.PI / 2, 0] },
@@ -618,26 +618,26 @@ const wallShape = new CANNON.Plane();
   b.quaternion.setFromEuler(...w.rot);
   world.addBody(b);
 });
-
+ 
 // ── Load Models ──
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/libs/draco/');
 const loader = new GLTFLoader();
 loader.setDRACOLoader(dracoLoader);
-
+ 
 const objectBodies = [];
 const statusEl = document.getElementById('load-status');
 const barEl = document.getElementById('load-bar-inner');
-
+ 
 const fileCache = {};
-
+ 
 async function loadAllModels() {
   const loaded = [];
   for (let i = 0; i < MODELS.length; i++) {
     const m = MODELS[i];
     statusEl.textContent = `Loading ${m.label} (${i + 1}/${MODELS.length})`;
     barEl.style.width = `${((i) / MODELS.length) * 100}%`;
-
+ 
     try {
       let gltfScene;
       if (fileCache[m.file]) {
@@ -662,12 +662,12 @@ async function loadAllModels() {
   statusEl.textContent = `Dropping ${loaded.length} objects...`;
   return loaded;
 }
-
+ 
 const models = await loadAllModels();
-
+ 
 function createPhysicsObject(templateScene, label, description, link, position) {
   const model = templateScene.clone();
-
+ 
   model.traverse(child => {
     if (child.isMesh) {
       child.castShadow = true;
@@ -675,23 +675,23 @@ function createPhysicsObject(templateScene, label, description, link, position) 
       if (child.material) child.material = child.material.clone();
     }
   });
-
+ 
   const bbox = new THREE.Box3().setFromObject(model);
   const size = new THREE.Vector3();
   bbox.getSize(size);
   const center = new THREE.Vector3();
   bbox.getCenter(center);
-
+ 
   const maxDim = Math.max(size.x, size.y, size.z);
   const scale = 1.2 / maxDim;
-
+ 
   model.scale.setScalar(scale);
   model.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
-
+ 
   const wrapper = new THREE.Group();
   wrapper.add(model);
   scene.add(wrapper);
-
+ 
   const halfExtents = new CANNON.Vec3(
     (size.x * scale) / 2, (size.y * scale) / 2, (size.z * scale) / 2
   );
@@ -708,12 +708,12 @@ function createPhysicsObject(templateScene, label, description, link, position) 
     Math.random() * Math.PI * 2
   );
   world.addBody(body);
-
+ 
   const entry = { mesh: wrapper, body, halfExtents, label, description, link };
   objectBodies.push(entry);
   return entry;
 }
-
+ 
 models.forEach((m, i) => {
   const angle = (i / models.length) * Math.PI * 2;
   const radius = 1.5 + Math.random() * 2;
@@ -724,9 +724,9 @@ models.forEach((m, i) => {
   };
   setTimeout(() => createPhysicsObject(m.scene, m.label, m.description, m.link, pos), i * 400);
 });
-
+ 
 setTimeout(() => document.getElementById('loading').classList.add('hidden'), 600);
-
+ 
 // ── Card Modal ──
 const cardOverlay = document.getElementById('card-overlay');
 const cardName = document.getElementById('card-name');
@@ -734,7 +734,7 @@ const cardDesc = document.getElementById('card-description');
 const cardLink = document.getElementById('card-link');
 const cardCloseBtn = document.getElementById('card-close');
 let cardOpen = false;
-
+ 
 // ── Iframe Overlay ──
 const iframeOverlay = document.getElementById('iframe-overlay');
 const iframeName = document.getElementById('iframe-name');
@@ -742,7 +742,7 @@ const iframeContent = document.getElementById('iframe-content');
 const iframeCloseBtn = document.getElementById('iframe-close');
 let iframeOpen = false;
 let currentCardObj = null;
-
+ 
 function openCard(obj) {
   currentCardObj = obj;
   cardName.textContent = obj.label;
@@ -759,14 +759,14 @@ function openCard(obj) {
   cardOpen = true;
   controls.enabled = false;
 }
-
+ 
 function closeCard() {
   cardOverlay.classList.remove('visible');
   cardOpen = false;
   currentCardObj = null;
   if (!iframeOpen) controls.enabled = true;
 }
-
+ 
 function openIframe(obj) {
   iframeName.textContent = obj.label;
   iframeContent.src = obj.link;
@@ -774,27 +774,27 @@ function openIframe(obj) {
   iframeOpen = true;
   closeCard();
 }
-
+ 
 function closeIframe() {
   iframeOverlay.classList.remove('visible');
   iframeContent.src = '';
   iframeOpen = false;
   controls.enabled = true;
 }
-
+ 
 cardLink.addEventListener('click', (e) => {
   e.preventDefault();
   if (currentCardObj && currentCardObj.link) {
     openIframe(currentCardObj);
   }
 });
-
+ 
 cardCloseBtn.addEventListener('click', closeCard);
 cardOverlay.addEventListener('click', (e) => { if (e.target === cardOverlay) closeCard(); });
-
+ 
 iframeCloseBtn.addEventListener('click', closeIframe);
 iframeOverlay.addEventListener('click', (e) => { if (e.target === iframeOverlay) closeIframe(); });
-
+ 
 // ── Keyboard Movement ──
 const keys = {};
 document.addEventListener('keydown', (e) => {
@@ -814,14 +814,14 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keyup', (e) => {
   keys[e.key.toLowerCase()] = false;
 });
-
+ 
 // ── Index Page ──
 const indexOverlay = document.getElementById('index-overlay');
 const indexList = document.getElementById('index-list');
 const indexLink = document.getElementById('index-link');
 const indexBack = document.getElementById('index-back');
 let indexOpen = false;
-
+ 
 // Thumbnail renderer — one shared WebGL context for all thumbnails
 const thumbSize = 160; // render at 2x for retina
 const thumbRenderer = new THREE.WebGLRenderer({ antialias: true });
@@ -830,48 +830,48 @@ thumbRenderer.setSize(thumbSize, thumbSize);
 thumbRenderer.setPixelRatio(1);
 thumbRenderer.toneMapping = THREE.ACESFilmicToneMapping;
 thumbRenderer.toneMappingExposure = 1.4;
-
+ 
 const thumbScene = new THREE.Scene();
 thumbScene.add(new THREE.AmbientLight(0xffffff, 0.8));
 const thumbDirLight = new THREE.DirectionalLight(0xffeedd, 2);
 thumbDirLight.position.set(3, 5, 4);
 thumbScene.add(thumbDirLight);
-
+ 
 const thumbCamera = new THREE.PerspectiveCamera(40, 1, 0.01, 50);
 thumbCamera.position.set(0, 0.5, 2.2);
 thumbCamera.lookAt(0, 0, 0);
-
+ 
 // Track thumb data for animation
 const thumbEntries = []; // { canvas, model, wrapper, angle }
-
+ 
 function buildIndex() {
   indexList.innerHTML = '';
   thumbEntries.length = 0;
-
+ 
   const sorted = [...MODELS].sort((a, b) => {
     const aHas = a.description ? 0 : 1;
     const bHas = b.description ? 0 : 1;
     return aHas - bHas;
   });
-
+ 
   sorted.forEach((m, i) => {
     const row = document.createElement('div');
     row.className = 'index-row';
-
+ 
     // Thumbnail canvas (2D — we copy from the shared renderer)
     const canvas = document.createElement('canvas');
     canvas.className = 'index-thumb';
     canvas.width = thumbSize;
     canvas.height = thumbSize;
-
+ 
     const name = document.createElement('div');
     name.className = 'index-name';
     name.textContent = m.label;
-
+ 
     const desc = document.createElement('div');
     desc.className = 'index-desc';
     desc.innerHTML = m.description || '';
-
+ 
     const link = document.createElement('a');
     link.className = 'index-archive-link' + (m.link ? '' : ' disabled');
     link.textContent = m.link ? 'go to archive' : 'coming soon';
@@ -881,21 +881,21 @@ function buildIndex() {
         openIframe({ label: m.label, link: m.link });
       }
     });
-
+ 
     canvas.style.cursor = 'pointer';
     name.style.cursor = 'pointer';
-
+ 
     const loaded = models.find(lm => lm.label === m.label);
-
+ 
     canvas.addEventListener('click', () => { if (loaded) openDetail(loaded); });
     name.addEventListener('click', () => { if (loaded) openDetail(loaded); });
-
+ 
     row.appendChild(canvas);
     row.appendChild(name);
     row.appendChild(desc);
     row.appendChild(link);
     indexList.appendChild(row);
-
+ 
     // Find the loaded model for this entry
     if (loaded) {
       const clone = loaded.scene.clone();
@@ -908,30 +908,30 @@ function buildIndex() {
       const s = 1.0 / maxDim;
       clone.scale.setScalar(s);
       clone.position.set(-center.x * s, -center.y * s, -center.z * s);
-
+ 
       const wrapper = new THREE.Group();
       wrapper.add(clone);
-
+ 
       thumbEntries.push({ canvas, wrapper, angle: Math.random() * Math.PI * 2 });
     } else {
       thumbEntries.push({ canvas, wrapper: null, angle: 0 });
     }
   });
 }
-
+ 
 // Render thumbnails in round-robin (a few per frame for performance)
 let thumbIndex = 0;
 const thumbsPerFrame = 3;
-
+ 
 function renderThumbnails() {
   if (!indexOpen || thumbEntries.length === 0) return;
-
+ 
   for (let n = 0; n < thumbsPerFrame; n++) {
     const entry = thumbEntries[thumbIndex % thumbEntries.length];
     thumbIndex++;
-
+ 
     if (!entry.wrapper) continue;
-
+ 
     // Clear previous children (only keep lights)
     thumbScene.children.forEach(c => {
       if (c.isGroup) thumbScene.remove(c);
@@ -940,22 +940,22 @@ function renderThumbnails() {
     for (let i = thumbScene.children.length - 1; i >= 0; i--) {
       if (thumbScene.children[i].isGroup) thumbScene.remove(thumbScene.children[i]);
     }
-
+ 
     entry.angle += 0.03;
     entry.wrapper.rotation.y = entry.angle;
     thumbScene.add(entry.wrapper);
-
+ 
     thumbRenderer.render(thumbScene, thumbCamera);
-
+ 
     // Copy to the row's 2D canvas
     const ctx = entry.canvas.getContext('2d');
     ctx.clearRect(0, 0, thumbSize, thumbSize);
     ctx.drawImage(thumbRenderer.domElement, 0, 0);
-
+ 
     thumbScene.remove(entry.wrapper);
   }
 }
-
+ 
 function showIndex() {
   buildIndex();
   indexOverlay.classList.add('visible');
@@ -964,7 +964,7 @@ function showIndex() {
   indexOpen = true;
   controls.enabled = false;
 }
-
+ 
 function hideIndex() {
   indexOverlay.classList.remove('visible');
   indexLink.style.display = 'block';
@@ -976,23 +976,22 @@ function hideIndex() {
     if (e.wrapper && e.wrapper.parent) e.wrapper.parent.remove(e.wrapper);
   });
 }
-
+ 
 indexLink.addEventListener('click', showIndex);
 indexBack.addEventListener('click', hideIndex);
-
+ 
 // ── Detail Popup (close-up 3D) ──
 const detailPopup = document.getElementById('detail-popup');
 const detailCanvas = document.getElementById('detail-canvas');
 const detailCloseBtn = document.getElementById('detail-close');
 let detailOpen = false;
 let detailWrapper = null;
-let detailAngle = 0;
-
+ 
 const detailRenderer = new THREE.WebGLRenderer({ canvas: detailCanvas, antialias: true });
 detailRenderer.setClearColor(0x111111, 1);
 detailRenderer.toneMapping = THREE.ACESFilmicToneMapping;
 detailRenderer.toneMappingExposure = 1.4;
-
+ 
 const detailScene = new THREE.Scene();
 detailScene.add(new THREE.AmbientLight(0xffffff, 0.7));
 const detailDir = new THREE.DirectionalLight(0xffeedd, 2.2);
@@ -1001,11 +1000,42 @@ detailScene.add(detailDir);
 const detailFill = new THREE.DirectionalLight(0x8899cc, 0.6);
 detailFill.position.set(-4, 3, -2);
 detailScene.add(detailFill);
-
+ 
 const detailCamera = new THREE.PerspectiveCamera(35, 4 / 3, 0.01, 50);
 detailCamera.position.set(0, 0.4, 2.4);
 detailCamera.lookAt(0, 0, 0);
-
+ 
+// Detail orbit controls — drag to inspect, auto-rotate resumes after 3s
+const detailControls = new OrbitControls(detailCamera, detailCanvas);
+detailControls.enableDamping = true;
+detailControls.dampingFactor = 0.08;
+detailControls.enableZoom = true;
+detailControls.enablePan = false;
+detailControls.autoRotate = true;
+detailControls.autoRotateSpeed = 3;
+detailControls.minDistance = 1;
+detailControls.maxDistance = 5;
+detailControls.target.set(0, 0, 0);
+detailControls.enabled = false;
+ 
+let detailIdleTimer = null;
+ 
+function pauseDetailAutoRotate() {
+  detailControls.autoRotate = false;
+  if (detailIdleTimer) clearTimeout(detailIdleTimer);
+}
+ 
+function scheduleDetailAutoRotate() {
+  if (detailIdleTimer) clearTimeout(detailIdleTimer);
+  detailIdleTimer = setTimeout(() => {
+    detailControls.autoRotate = true;
+  }, 3000);
+}
+ 
+detailCanvas.addEventListener('pointerdown', pauseDetailAutoRotate);
+detailCanvas.addEventListener('pointerup', scheduleDetailAutoRotate);
+detailCanvas.addEventListener('pointerleave', scheduleDetailAutoRotate);
+ 
 function openDetail(modelData) {
   // Clone and normalize
   const clone = modelData.scene.clone();
@@ -1021,17 +1051,24 @@ function openDetail(modelData) {
   const s = 1.0 / maxDim;
   clone.scale.setScalar(s);
   clone.position.set(-center.x * s, -center.y * s, -center.z * s);
-
+ 
   if (detailWrapper) detailScene.remove(detailWrapper);
   detailWrapper = new THREE.Group();
   detailWrapper.add(clone);
   detailScene.add(detailWrapper);
-  detailAngle = 0;
-
+ 
   // Show popup first so canvas has dimensions
   detailPopup.classList.add('visible');
   detailOpen = true;
-
+  detailControls.enabled = true;
+  detailControls.autoRotate = true;
+  if (detailIdleTimer) clearTimeout(detailIdleTimer);
+ 
+  // Reset camera
+  detailCamera.position.set(0, 0.4, 2.4);
+  detailControls.target.set(0, 0, 0);
+  detailControls.update();
+ 
   // Size renderer on next frame when layout is computed
   requestAnimationFrame(() => {
     const rect = detailCanvas.getBoundingClientRect();
@@ -1045,43 +1082,41 @@ function openDetail(modelData) {
     detailCamera.updateProjectionMatrix();
   });
 }
-
+ 
 function closeDetail() {
   detailPopup.classList.remove('visible');
+  detailControls.enabled = false;
+  if (detailIdleTimer) clearTimeout(detailIdleTimer);
   if (detailWrapper) {
     detailScene.remove(detailWrapper);
     detailWrapper = null;
   }
   detailOpen = false;
 }
-
+ 
 function renderDetail() {
   if (!detailOpen || !detailWrapper) return;
-  detailAngle += 0.01;
-  detailWrapper.rotation.y = detailAngle;
-
-  // Ensure wrapper is in scene
-  if (!detailWrapper.parent) detailScene.add(detailWrapper);
+  detailControls.update();
   detailRenderer.render(detailScene, detailCamera);
 }
-
+ 
 detailCloseBtn.addEventListener('click', closeDetail);
 detailPopup.addEventListener('click', (e) => { if (e.target === detailPopup) closeDetail(); });
-
+ 
 // ── Interaction ──
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let dragging = null;
 let pointerDownPos = null;
 const nameLabel = document.getElementById('name-label');
-
+ 
 function getMouseNDC(e) {
   return new THREE.Vector2(
     (e.clientX / innerWidth) * 2 - 1,
     -(e.clientY / innerHeight) * 2 + 1
   );
 }
-
+ 
 function findHitObject(ndc) {
   raycaster.setFromCamera(ndc, camera);
   const allMeshes = [];
@@ -1096,10 +1131,10 @@ function findHitObject(ndc) {
   }
   return null;
 }
-
+ 
 renderer.domElement.addEventListener('pointermove', (e) => {
   if (cardOpen) return;
-
+ 
   if (dragging) {
     mouse.copy(getMouseNDC(e));
     raycaster.setFromCamera(mouse, camera);
@@ -1109,7 +1144,7 @@ renderer.domElement.addEventListener('pointermove', (e) => {
     target.add(dragging.offset);
     const hy = dragging.obj.halfExtents.y;
     if (target.y < hy) target.y = hy;
-
+ 
     const now = performance.now();
     const dt = (now - dragging.prevTime) / 1000;
     if (dt > 0.001) {
@@ -1120,7 +1155,7 @@ renderer.domElement.addEventListener('pointermove', (e) => {
     dragging.obj.body.position.set(target.x, target.y, target.z);
     return;
   }
-
+ 
   mouse.copy(getMouseNDC(e));
   const hit = findHitObject(mouse);
   if (hit) {
@@ -1132,22 +1167,22 @@ renderer.domElement.addEventListener('pointermove', (e) => {
     renderer.domElement.style.cursor = 'grab';
   }
 });
-
+ 
 renderer.domElement.addEventListener('pointerdown', (e) => {
   if (cardOpen) return;
   mouse.copy(getMouseNDC(e));
   pointerDownPos = { x: e.clientX, y: e.clientY };
-
+ 
   const hit = findHitObject(mouse);
   if (!hit) return;
-
+ 
   e.preventDefault();
   controls.enabled = false;
   document.body.classList.add('dragging');
-
+ 
   hit.obj.body.wakeUp();
   hit.obj.body.type = CANNON.Body.KINEMATIC;
-
+ 
   const planeNormal = new THREE.Vector3();
   camera.getWorldDirection(planeNormal);
   const dragPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(planeNormal, hit.point);
@@ -1155,30 +1190,30 @@ renderer.domElement.addEventListener('pointerdown', (e) => {
     new THREE.Vector3(hit.obj.body.position.x, hit.obj.body.position.y, hit.obj.body.position.z),
     hit.point
   );
-
+ 
   dragging = {
     obj: hit.obj, plane: dragPlane, offset,
     prevPos: new THREE.Vector3(hit.obj.body.position.x, hit.obj.body.position.y, hit.obj.body.position.z),
     velocity: new THREE.Vector3(),
     prevTime: performance.now(),
   };
-
+ 
   nameLabel.textContent = hit.obj.label;
   nameLabel.style.opacity = '1';
   document.getElementById('hint').style.opacity = '0';
 });
-
+ 
 const onPointerUp = (e) => {
   if (!dragging) return;
-
+ 
   const body = dragging.obj.body;
   body.type = CANNON.Body.DYNAMIC;
   body.wakeUp();
-
+ 
   const dx = e.clientX - pointerDownPos.x;
   const dy = e.clientY - pointerDownPos.y;
   const dist = Math.sqrt(dx * dx + dy * dy);
-
+ 
   if (dist < 6) {
     body.velocity.set(0, 0, 0);
     body.angularVelocity.set(0, 0, 0);
@@ -1193,7 +1228,7 @@ const onPointerUp = (e) => {
       (Math.random() - 0.5) * 5
     );
   }
-
+ 
   dragging = null;
   if (!cardOpen) controls.enabled = true;
   document.body.classList.remove('dragging');
@@ -1202,21 +1237,21 @@ const onPointerUp = (e) => {
 };
 renderer.domElement.addEventListener('pointerup', onPointerUp);
 renderer.domElement.addEventListener('pointerleave', onPointerUp);
-
+ 
 // ── Animate ──
 const clock = new THREE.Clock();
 const moveSpeed = 0.12;
 const bounds = 9.5; // walls are at ±10, keep camera slightly inside
-
+ 
 function animate() {
   requestAnimationFrame(animate);
   world.step(1 / 60, clock.getDelta(), 3);
-
+ 
   for (const { mesh, body } of objectBodies) {
     mesh.position.copy(body.position);
     mesh.quaternion.copy(body.quaternion);
   }
-
+ 
   // ── WASD / Arrow key camera movement ──
   if (!cardOpen && !iframeOpen) {
     // Get camera's forward and right directions (flattened to XZ plane)
@@ -1224,42 +1259,42 @@ function animate() {
     camera.getWorldDirection(forward);
     forward.y = 0;
     forward.normalize();
-
+ 
     const right = new THREE.Vector3();
     right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
-
+ 
     const move = new THREE.Vector3();
-
+ 
     if (keys['w'] || keys['arrowup'])    move.add(forward);
     if (keys['s'] || keys['arrowdown'])  move.sub(forward);
     if (keys['a'] || keys['arrowleft'])  move.sub(right);
     if (keys['d'] || keys['arrowright']) move.add(right);
-
+ 
     if (move.lengthSq() > 0) {
       move.normalize().multiplyScalar(moveSpeed);
-
+ 
       // Move both camera and orbit target together
       const newCamPos = camera.position.clone().add(move);
       const newTarget = controls.target.clone().add(move);
-
+ 
       // Clamp to bounds
       newCamPos.x = Math.max(-bounds, Math.min(bounds, newCamPos.x));
       newCamPos.z = Math.max(-bounds, Math.min(bounds, newCamPos.z));
       newTarget.x = Math.max(-bounds, Math.min(bounds, newTarget.x));
       newTarget.z = Math.max(-bounds, Math.min(bounds, newTarget.z));
-
+ 
       camera.position.copy(newCamPos);
       controls.target.copy(newTarget);
     }
   }
-
+ 
   controls.update();
   renderer.render(scene, camera);
   renderThumbnails();
   renderDetail();
 }
 animate();
-
+ 
 addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
